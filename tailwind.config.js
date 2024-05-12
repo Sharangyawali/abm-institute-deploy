@@ -13,6 +13,14 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
+    screens:{
+      'mobile': '390px',
+      'tablet': '640px',
+      'laptop': '1024px',
+      'desktop': '1280px',
+    }
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar')({ preferredStrategy: 'pseudoelements' }),
+  ],
 };

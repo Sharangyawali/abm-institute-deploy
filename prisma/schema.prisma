@@ -1,0 +1,61 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING") 
+}
+
+model User {
+ id   String @default(cuid()) @id
+name String 
+email String @unique
+phone String  @unique
+password String?
+role    Type  
+isverified  Boolean @default(false)
+createdAt   DateTime @default(now())
+}
+
+enum Type{
+    Admin
+    FrontDesk
+    Accounting
+    Teacher
+}
+
+model Visitors{
+  id String @default(cuid()) @id
+  firstName String
+  lastName String
+  streetAddress String
+  city String
+  state String
+  zipCode String
+  phone String @unique
+  email String
+  purpose String
+  gender Gender
+  history DateTime[]
+  visit Visits[]
+}
+
+enum Gender{
+  Male
+  Female
+  Other
+}
+
+model Visits{
+  id String @default(cuid()) @id
+  firstName String
+  lastName String
+  phone String
+  visitTime DateTime @default(now())
+  visitor Visitors @relation(fields: [visitorId],references: [id])
+  visitorId String  
+}
