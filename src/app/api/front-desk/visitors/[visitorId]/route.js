@@ -1,11 +1,13 @@
-import { connectDb } from "@/helper/db";
-import { Visitors } from "@/models/uniqueVisitors";
+import prisma from "@/helper/db";
 import { NextResponse } from "next/server";
-connectDb()
 export async function GET(req,{params}){
     try {
         const{visitorId}=params;
-        const visitor=await Visitors.findById(visitorId)
+        const visitor=await prisma.Visitors.findUnique({
+            where:{
+                id:visitorId
+            }
+        })
         return NextResponse.json({
             success:true,
             message:"Successfully obtained visitor",
