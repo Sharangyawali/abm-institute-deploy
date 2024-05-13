@@ -36,7 +36,7 @@ const Navbar = () => {
 
   const getNotifications = async () => {
     console.log("called ");
-    let result = await fetch("http://localhost:3000/api/admin/requestedUser", {
+    let result = await fetch(`${process.env.API_VERCEL}api/admin/requestedUser`, {
       method: "get",
     });
     result = await result.json();
@@ -69,7 +69,7 @@ const Navbar = () => {
     else{
       if(user.id){
         dispatch(setLoadingTrue())
-        let result = await fetch("http://localhost:3000/api/admin/verifyUser", {
+        let result = await fetch(`${process.env.API_VERCEL}api/admin/verifyUser`, {
         method: "post",
         body: JSON.stringify({id:user.id,password:password}),
         headers: { "Content-Type": "application/json" },
@@ -89,7 +89,7 @@ const Navbar = () => {
   const rejectUser=async()=>{
       if(user.id){
         dispatch(setLoadingTrue())
-        let result = await fetch("http://localhost:3000/api/admin/rejectUser", {
+        let result = await fetch(`${process.env.API_VERCEL}api/admin/rejectUser`, {
         method: "post",
         body: JSON.stringify({id:user.id}),
         headers: { "Content-Type": "application/json" },

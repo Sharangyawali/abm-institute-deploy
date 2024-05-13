@@ -29,7 +29,7 @@ const page = () => {
       }
       else{
           dispatch(setLoadingTrue())
-        let result = await fetch("http://localhost:3000/api/front-desk/addVisitor", {
+        let result = await fetch(`${process.env.API_VERCEL}api/front-desk/addVisitor`, {
           method: "post",
           body: JSON.stringify({firstName,lastName,streetAddress,city,state,zipCode,email,phone,purpose,gender}),
           headers: { "Content-Type": "application/json" },

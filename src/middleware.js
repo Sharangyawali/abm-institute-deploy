@@ -59,7 +59,9 @@ export const config = {
     "/login",
     "/register",
     "/api/admin/:path*",
-    "/admin/:path*"
+    "/admin/:path*",
+    "/api/front-desk/:path*",
+    "/front-desk/:path*"
   ],
 }
 
