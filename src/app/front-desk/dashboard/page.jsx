@@ -21,7 +21,7 @@ const page = () => {
   },[])
 
   const getAllUsers=async()=>{
-    let result = await fetch(`${process.env.API_VERCEL}api/front-desk/visitors`, {
+    let result = await fetch(`/api/front-desk/visitors`, {
       method: "get",
     });
     result = await result.json();
@@ -38,7 +38,7 @@ const page = () => {
 
 
   const getLatestUsers=async()=>{
-    let result = await fetch(`${process.env.API_VERCEL}api/front-desk/getLatestVisitors`, {
+    let result = await fetch(`/api/front-desk/getLatestVisitors`, {
       method: "get",
     });
     result = await result.json();
@@ -54,7 +54,7 @@ const page = () => {
   }
 
   const getMaxUsers=async()=>{
-    let result = await fetch(`${process.env.API_VERCEL}api/front-desk/getMaxVisitors`, {
+    let result = await fetch(`/api/front-desk/getMaxVisitors`, {
       method: "get",
     });
     result = await result.json();

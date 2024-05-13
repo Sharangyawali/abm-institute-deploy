@@ -29,7 +29,7 @@ const Login = () => {
       e.preventDefault()
       setLoading(true)
 
-      let result = await fetch(`${process.env.API_VERCEL}api/users/auth/login`, {
+      let result = await fetch(`/api/users/auth/login`, {
         method: "post",
         body: JSON.stringify({email:data.email,password:data.password}),
         headers: { "Content-Type": "application/json" },

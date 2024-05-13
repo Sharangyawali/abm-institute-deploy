@@ -38,7 +38,7 @@ const page = () => {
           const email=data.email
           const phone=data.phoneNumber
           const role=data.category
-          let result = await fetch(`${process.env.API_VERCEL}api/users/auth/register`, {
+          let result = await fetch(`/api/users/auth/register`, {
             method: "post",
             body: JSON.stringify({name,email,phone,role}),
             headers: { "Content-Type": "application/json" },
