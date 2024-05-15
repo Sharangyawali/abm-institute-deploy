@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(){
     try {
-        const visitors=await prisma.Visitors.findMany()
+        const visitors=await prisma.visitors.findMany()
         return NextResponse.json({
             success:true,
             message:"Successfully obtained visitors",

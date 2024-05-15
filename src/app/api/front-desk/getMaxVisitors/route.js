@@ -29,7 +29,7 @@ try {
       });
       return {
         phone,
-        count: group.count,
+        count: group._count.phone,
         firstName,
         lastName
       };

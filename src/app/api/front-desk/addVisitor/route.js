@@ -15,29 +15,41 @@ export async function POST(req){
                     phone:phone
                 }
             })
+            const time=new Date()
             if(visitor){
                 const visitorUpdate=await prisma.Visitors.update({
                     where:{
                         phone:phone
                     },
                     data:{
-                        firstName,lastName,streetAddress,city,state,zipCode,email,purpose,gender,
+                        firstName,lastName,streetAddress,city,state,zipCode,email,gender,
                         history:{
-                            push:new Date(),
+                            push:{
+                                    time:time,
+                                    purpose:purpose
+                            },
                         }
                     }
                 })
                 const visits=await prisma.Visits.create({
-                    firstName,lastName,phone,visitTime:new Date(),visitorId:visitorUpdate.id
+                    data:{
+                        firstName,lastName,phone,visitTime:time,visitorId:visitorUpdate.id,purpose
+
+                    }
                 })
             }
             else{
                 const newVisitor=await prisma.Visitors.create({
-                    firstName,lastName,streetAddress,city,state,zipCode,phone,email,purpose,gender,
-                    history:[new Date()]
+                    data:{
+                        firstName,lastName,streetAddress,city,state,zipCode,phone,email,gender,
+                        history:[{time:time,purpose:purpose}]
+
+                    }
                 })
                 const visits=await prisma.Visits.create({
-                    firstName,lastName,phone,visitTime:new Date(),visitorId:newVisitor.id
+                    data:{
+                        firstName,lastName,phone,visitTime:time,visitorId:newVisitor.id,purpose
+                    }
                 })
             }
             return NextResponse.json({

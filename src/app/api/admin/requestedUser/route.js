@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 export async function GET(req){
     try {
-        const users=await prisma.User.findMany({
+        const users=await prisma.user.findMany({
         where:{
             isverified:false
         } ,

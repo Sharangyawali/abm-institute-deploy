@@ -44,7 +44,7 @@ if(protectedRoute1){
               return NextResponse.redirect(new URL("/login",request.url))
             }
               const {payload} = await jwtVerify(authToken, getJwtSecretKey());
-             if(payload.role!=='FrontDesk'||payload.role!=='Admin'){
+             if(payload.role!=='FrontDesk'&&payload.role!=='Admin'){
               return NextResponse.redirect(new URL("/login",request.url))
              }
           } catch (error) {

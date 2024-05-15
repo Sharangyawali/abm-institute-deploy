@@ -38,9 +38,8 @@ model Visitors{
   zipCode String
   phone String @unique
   email String
-  purpose String
   gender Gender
-  history DateTime[]
+  history Json[]
   visit Visits[]
 }
 
@@ -55,6 +54,7 @@ model Visits{
   firstName String
   lastName String
   phone String
+  purpose String
   visitTime DateTime @default(now())
   visitor Visitors @relation(fields: [visitorId],references: [id])
   visitorId String  

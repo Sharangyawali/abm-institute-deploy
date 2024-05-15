@@ -18,12 +18,12 @@
 //         }
 //     })
 //     console.log(user)
-//     NextResponse.json({
+//   return  NextResponse.json({
 //         success:true
 //     },{status:200})
 //     } catch (error) {
 //         console.log(error)
-//         NextResponse.json({
+//        return NextResponse.json({
 //             success:false
 //         },{status:500})
 //     }
