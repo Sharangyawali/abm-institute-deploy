@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
+export const dynamic='force-dynamic'
 export async function GET(req) {
   try {
     // Fetch last 3 credited transactions
