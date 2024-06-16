@@ -11,7 +11,7 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { MdAccountCircle } from "react-icons/md";
 import { FaPersonShelter } from "react-icons/fa6";
 import { IoPersonAdd } from "react-icons/io5";
-
+import { SiGoogleclassroom } from "react-icons/si";
 const Sidebar = ({show}) => {
   const pathName = usePathname()
   return (
@@ -33,6 +33,13 @@ const Sidebar = ({show}) => {
     ''
   }
                   
+              </Link>
+              <Link href='/admin/class/allClasses' className={pathName.startsWith('/admin/class')?"flex items-center w-full h-10 px-3 mt-2 rounded text-[#272727] bg-gray-300":"flex items-center w-full h-10 px-3 mt-2 rounded hover:text-[#272727] hover:bg-gray-300"} >
+                  <SiGoogleclassroom className='w-[25px] h-[25px]' color='black'/>
+        {show===true?
+    (<span className="ml-2 text-sm font-medium">Classes</span>):
+    ''
+  }
               </Link>
               <Link href='/admin/newRequest' className={pathName==='/admin/newRequest'?"flex items-center w-full h-10 px-3 mt-2 rounded text-[#272727] bg-gray-300":"flex items-center w-full h-10 px-3 mt-2 rounded hover:text-[#272727] hover:bg-gray-300"} >
                   <IoPersonAdd className='w-[25px] h-[25px]' color='black'/>

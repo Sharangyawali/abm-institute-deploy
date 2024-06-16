@@ -16,12 +16,12 @@ const SimpleLineChart = ({data}) => {
       }}
     >
       <CartesianGrid strokeDasharray="1 5" />
-      <XAxis strokeWidth={0} dataKey="name" />
+      <XAxis strokeWidth={0} dataKey="month" />
       <YAxis strokeWidth={0} />
       <Tooltip />
       {/* <Legend /> */}
-        <Area type="monotone"  fill='#fc9003' dataKey="present" strokeWidth={3} stroke="#fc9003" fillOpacity={0.2}/>
-        <Area type="monotone" dataKey="absent"  stroke="#1bc5d1" fillOpacity={0} />
+        <Area type="monotone"  fill='#fc9003' dataKey="gainedAmount" strokeWidth={3} stroke="#fc9003" fillOpacity={0.2}/>
+        <Area type="monotone" dataKey="lostAmount"  stroke="#1bc5d1" fillOpacity={0} />
     </AreaChart>
   </ResponsiveContainer>
   )

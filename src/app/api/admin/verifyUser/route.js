@@ -34,6 +34,37 @@ export async function POST(req){
                         }
                     })
                     userVerifiedMail(user.name,user.email,user.role,password)
+                    const name=user.name
+                    const email=user.email
+                    const phone=user.phone
+                    if(user.role==='Teacher'){
+                        await prisma.Teachers.create({
+                            data:{
+                                userId:id,name,email,phone
+                            }
+                        })
+                    }
+                    else if(user.role==="FrontDesk"){
+                        await prisma.FrontDesks.create({
+                            data:{
+                                userId:id,name,email,phone
+                            }
+                        })
+                    }
+                    else if(user.role==="Accounting"){
+                        await prisma.Accountant.create({
+                            data:{
+                                userId:id,name,email,phone
+                            }
+                        })
+                    }else{
+                        return NextResponse.json({
+                            success:false,
+                            message:'invalid role'
+                        },{
+                            status:401
+                        })
+                    }
                     return NextResponse.json({
                         success:true,
                         message:"Successfully verified user"

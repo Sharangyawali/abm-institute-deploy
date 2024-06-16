@@ -90,7 +90,7 @@ const page = () => {
                 All Visitors list here
               </div>
             ) : (
-              allUsers.map((visitor) => {
+              allUsers.map((visitor,index) => {
                 let length = visitor.history.length;
 
                 const date = new Date(visitor.history[length - 1].time);
@@ -107,7 +107,7 @@ const page = () => {
                 return (
                   <div
                     className="min-h-[100px] w-[100%] shadow-md rounded-md flex flex-col tablet:flex-row justify-between items-center px-[14px] gap-5"
-                    key={visitor._id}
+                    key={index}
                   >
                     <div className="flex w-[100%] tablet:w-[50%] gap-[40px] justify-between tablet:justify-start">
                       <div className="bg-[#d4d4d4] rounded-full ">
@@ -180,9 +180,9 @@ const page = () => {
                   Top Visitors list here
                 </div>
               ) : (
-                maxUsers.map((user) => {
+                maxUsers.map((user,index) => {
                   return (
-                    <div className="w-[100%] h-[90px] rounded-2xl bg-[#f8f8f8] shadow-lg flex justify-start items-center gap-3">
+                    <div className="w-[100%] h-[90px] rounded-2xl bg-[#f8f8f8] shadow-lg flex justify-start items-center gap-3" key={index}>
                       <div className="h-[40px] w-[40px] ml-8 rounded-full">
                         <img
                           src={
@@ -224,7 +224,7 @@ const page = () => {
                   Recent Visitors list here
                 </div>
               ) : (
-                latestUsers.map((user) => {
+                latestUsers.map((user,index) => {
                   const date=new Date(user.visitTime)
                   const options = {
                     year: "numeric",
@@ -237,16 +237,20 @@ const page = () => {
                   };
                   const formattedDate = date.toLocaleDateString("en-GB", options);
                   return (
-                    <div className="w-[100%] h-[90px] rounded-2xl bg-[#f8f8f8] shadow-lg flex justify-start items-center gap-3">
+                    <div className="w-[100%] h-[90px] rounded-2xl bg-[#f8f8f8] shadow-lg flex justify-start items-center gap-3" key={index}>
                       <div className="h-[40px] w-[40px] ml-8 rounded-full">
                         <img
-                          src="/female.png"
+                          src={
+                            user.gender === "Female"
+                              ? "/female.png"
+                              : "/profile-demo.jpg"
+                          }
                           className="h-[100%] w-[100%] rounded-full"
                         ></img>
                       </div>
                       <div className="flex flex-col ml-[30px]">
                         <span className="font-bold text-[17px]">
-                          {user.firstName} {user.LastName}
+                          {user.firstName} {user.lastName}
                         </span>
                         <span className="text-[orange] font-semibold text-[13px]">
                           {formattedDate}

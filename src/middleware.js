@@ -16,6 +16,9 @@ if(authToken&&role){
       else if(payload.role==='FrontDesk'){
         return NextResponse.redirect(new URL("/front-desk/dashboard",request.url))
       }
+      else if(payload.role==='Teacher'){
+        return NextResponse.redirect(new URL("/teacher/attendance",request.url))
+      }
     } catch (error) {
       console.log("error in token verification")
     }

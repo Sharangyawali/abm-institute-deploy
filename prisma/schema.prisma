@@ -5,57 +5,204 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING") 
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
- id   String @default(cuid()) @id
-name String 
-email String @unique
-phone String  @unique
-password String?
-role    Type  
-isverified  Boolean @default(false)
-createdAt   DateTime @default(now())
+  id         String      @id @default(cuid())
+  name       String
+  email      String      @unique
+  phone      String      @unique
+  password   String?
+  role       Type
+  isverified Boolean     @default(false)
+  createdAt  DateTime    @default(now())
+  teacher    Teachers?
+  frontDesk  FrontDesks?
+  accountant Accountant?
 }
 
-enum Type{
-    Admin
-    FrontDesk
-    Accounting
-    Teacher
+enum Type {
+  Admin
+  FrontDesk
+  Accounting
+  Teacher
 }
 
-model Visitors{
-  id String @default(cuid()) @id
-  firstName String
-  lastName String
+model Visitors {
+  id            String   @id @default(cuid())
+  firstName     String
+  lastName      String
   streetAddress String
-  city String
-  state String
-  zipCode String
-  phone String @unique
-  email String
-  gender Gender
-  history Json[]
-  visit Visits[]
+  city          String
+  state         String
+  zipCode       String
+  phone         String   @unique
+  email         String
+  gender        Gender
+  history       Json[]
+  visit         Visits[]
 }
 
-enum Gender{
+enum Gender {
   Male
   Female
   Other
 }
 
-model Visits{
-  id String @default(cuid()) @id
+model Visits {
+  id        String   @id @default(cuid())
   firstName String
-  lastName String
-  phone String
-  purpose String
+  lastName  String
+  phone     String
+  purpose   String
   visitTime DateTime @default(now())
-  visitor Visitors @relation(fields: [visitorId],references: [id])
-  visitorId String  
+  visitor   Visitors @relation(fields: [visitorId], references: [id])
+  visitorId String
+}
+
+model Teachers {
+  id            String           @id @default(cuid())
+  user          User             @relation(fields: [userId], references: [id])
+  userId        String           @unique
+  name          String
+  streetAddress String?
+  city          String?
+  state         String?
+  phone         String           @unique
+  email         String           @unique
+  profilePic    String?
+  gender        Gender?
+  agreedSalary  String?
+  salary        SalaryPayments[]
+  class         Classes[]
+  createdAt     DateTime         @default(now())
+}
+
+model FrontDesks {
+  id            String           @id @default(cuid())
+  user          User             @relation(fields: [userId], references: [id])
+  userId        String           @unique
+  name          String
+  streetAddress String?
+  city          String?
+  state         String?
+  phone         String           @unique
+  email         String           @unique
+  profilePic    String?
+  gender        Gender?
+  agreedSalary  String?
+  salary        SalaryPayments[]
+  createdAt     DateTime         @default(now())
+}
+
+model Accountant {
+  id            String           @id @default(cuid())
+  user          User             @relation(fields: [userId], references: [id])
+  userId        String           @unique
+  name          String
+  streetAddress String?
+  city          String?
+  state         String?
+  phone         String           @unique
+  email         String           @unique
+  profilePic    String?
+  gender        Gender?
+  agreedSalary  String?
+  salary        SalaryPayments[]
+  createdAt     DateTime         @default(now())
+}
+
+model Classes {
+  id         String         @id @default(cuid())
+  className  String
+  startTime  String
+  endTime    String
+  teacher    Teachers       @relation(fields: [teachersId], references: [id])
+  teachersId String
+  students   ClassStudent[]
+  attendance Attendance[]
+  createdAt  DateTime       @default(now())
+}
+
+model Students {
+  id            String         @id @default(cuid())
+  firstName     String
+  lastName      String
+  streetAddress String
+  city          String
+  state         String
+  zipCode String
+  phone         String         @unique
+  email         String         @unique
+  gender        Gender?
+  agreedFee     String?
+  classes       ClassStudent[]
+  payments      FeePayments[]
+  createdAt     DateTime       @default(now())
+}
+
+model ClassStudent {
+  id        String   @id @default(cuid())
+  classId   String
+  studentId String
+  class     Classes  @relation(fields: [classId], references: [id])
+  student   Students @relation(fields: [studentId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([classId, studentId])
+}
+
+model FeePayments {
+  id        String   @id @default(cuid())
+  amount    Decimal?
+  method  PaymentMethods
+  student   Students @relation(fields: [studentId], references: [id])
+  transaction Transaction @relation(fields: [transactionId],references: [id]) 
+  transactionId String @unique
+  studentId String
+  createdAt DateTime @default(now())
+}
+
+enum PaymentMethods {
+  Cash
+  Cheque
+  Ebanking
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  amount Decimal
+  purpose String?
+  feePayment FeePayments?
+  salaryPayment SalaryPayments?
+  createdAt    DateTime    @default(now())
+  todays_date DateTime  
+}
+
+model SalaryPayments {
+  id           String      @id @default(cuid())
+  amount       Decimal?
+  method  PaymentMethods
+  createdAt    DateTime    @default(now())
+  teacher      Teachers?   @relation(fields: [teacherId], references: [id])
+  teacherId    String?     
+  frontDesk    FrontDesks? @relation(fields: [frontDeskId], references: [id])
+  frontDeskId  String?     
+  accountant   Accountant? @relation(fields: [accounatntId], references: [id])
+  accounatntId String?     
+  transaction Transaction @relation(fields: [transactionId],references: [id]) 
+  transactionId String @unique
+}
+
+model Attendance {
+  id           String      @id @default(cuid())
+  classId String 
+  class Classes @relation(fields: [classId],references: [id])
+  record Json
+  today String 
+  createdAt    DateTime    @default(now())
+   @@unique([today, classId])
 }
