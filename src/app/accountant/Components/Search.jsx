@@ -30,10 +30,27 @@ const Search = () => {
     });
     result = await result.json();
     if (result.success === true) {
-      console.log("students are", result.students);
-      setEmployee((prev) => [...prev, ...result.students]);
+      const studentRecord=result.students.map((stud,index)=>({
+        ...stud,role:'Student'
+      }))
+      setEmployee((prev) => [...prev, ...studentRecord]);
+      visitors()
     }
   };
+
+  const visitors=async()=>{
+    let result = await fetch(`/api/accountant/visitors`, {
+      method: "get",
+    });
+    result = await result.json();
+    if (result.success === true) {
+      const visitorsRecord=result.visitors.map((visit,index)=>({
+        ...visit,role:'Visitors'
+      }))
+      setEmployee((prev) => [...prev, ...visitorsRecord]);
+    }
+  }
+
   const handleSearch=(val)=>{
 setSearch(val)
 if(val.length>0){
@@ -46,7 +63,14 @@ if(val.length>0){
         showingAre.push({name:emp.name,role:emp.role,detail:emp})
       }
     }
-    else if(emp.firstName && emp.lastName){
+    else if(emp.firstName&&emp.lastName&&emp.role==='Visitors'){
+      const name=`${emp.firstName} ${emp.lastName}`
+      const nameToLower=name.toLowerCase()
+      if(value && nameToLower.includes(value)){
+        showingAre.push ({name:name,role:'Visitors',detail:emp})
+      }
+    }
+    else if(emp.firstName && emp.lastName&&emp.role==='Visitors'){
       const name=`${emp.firstName} ${emp.lastName}`
       const nameToLower=name.toLowerCase()
       if(value && nameToLower.includes(value)){
@@ -63,6 +87,8 @@ else{
   setResult([])
 }
   }
+
+
 const handleOnClick=()=>{
   setShow(false)
   setResult([])

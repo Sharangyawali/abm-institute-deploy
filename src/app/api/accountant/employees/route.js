@@ -7,7 +7,11 @@ export async function GET(req){
             where:{
                 role:{
                     not:'Admin'
-                }
+                },
+                OR:[
+                    {deleted:false},
+                    {deleted:null}
+                  ]
             },
         orderBy:{
             createdAt:"desc"

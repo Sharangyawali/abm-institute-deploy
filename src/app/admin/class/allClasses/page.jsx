@@ -1,6 +1,7 @@
 "use client"
 import { setLoadingFalse, setLoadingTrue } from '@/store/loadingShow/loadingShow';
 import { CircularProgress } from '@mui/joy';
+import Link from 'next/link';
 import React,{useEffect,useState} from 'react'
 import { useDispatch} from "react-redux";
 
@@ -37,7 +38,7 @@ const page = () => {
       :
       classes.map((classes)=>{
          return(
-       <div className='w-[98%] tablet:w-[47%] laptop:w-[23%] h-[250px] shadow-xl rounded-lg flex flex-col' key={classes.id}>
+       <Link href={`/admin/class/history/class/${classes.id}`} className='w-[98%] tablet:w-[47%] laptop:w-[23%] h-[250px] shadow-xl rounded-lg flex flex-col' key={classes.id}>
          <div className='w-[100%] h-[90px] bg-[#c75bc7] text-white font-bold flex justify-center px-[30px] text-[22px] flex-col'>
            <div>
            {classes.className}
@@ -52,7 +53,7 @@ const page = () => {
                  {classes.startTime} to {classes.endTime} 
                </div>
            </div>
-       </div>
+       </Link>
          );
       })
       

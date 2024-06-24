@@ -61,7 +61,7 @@ const page = ({ params }) => {
               {attendance[0].class.className}
             </div>
             <div className="text-[12px] text-[gray]">
-              {attendance[0].class.startTime}-${attendance[0].class.endTime}
+              {attendance[0].class.startTime}-{attendance[0].class.endTime}
             </div>
             {/* <div className='flex flex-col'>
 

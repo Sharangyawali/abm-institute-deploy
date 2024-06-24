@@ -3,6 +3,7 @@ import React,{useEffect,useState} from 'react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { CircularProgress } from '@mui/joy'
+
 const page = ({params}) => {
     const router=useRouter()
 const [loading,setLoading]=useState(true)
@@ -28,17 +29,39 @@ const getEmployeeDetail = async () => {
       toast.error(result.message);
       router.push("/login");
     } else {
+        
         if(result.employee){
+            console.log(result.employee,"is the employee detail")
             const employee=result.employee
             if(employee.teacher!==null){
                 setName(employee.teacher.name)
                 setStreetAddress(employee.teacher.streetAddress)
-                setCity(employee.teacher.setCity)
+                setCity(employee.teacher.city)
                 setState(employee.teacher.state)
                 setPhone(employee.teacher.phone)
                 setEmail(employee.teacher.email)
                 setGender(employee.teacher.gender)
                 setSalary(employee.teacher.salary)
+            }
+            else if(employee.accountant!==null){
+                setName(employee.accountant.name)
+                setStreetAddress(employee.accountant.streetAddress)
+                setCity(employee.accountant.city)
+                setState(employee.accountant.state)
+                setPhone(employee.accountant.phone)
+                setEmail(employee.accountant.email)
+                setGender(employee.accountant.gender)
+                setSalary(employee.accountant.salary)
+            }
+            else if(employee.frontDesk!==null){
+                setName(employee.frontDesk.name)
+                setStreetAddress(employee.frontDesk.streetAddress)
+                setCity(employee.frontDesk.city)
+                setState(employee.frontDesk.state)
+                setPhone(employee.frontDesk.phone)
+                setEmail(employee.frontDesk.email)
+                setGender(employee.frontDesk.gender)
+                setSalary(employee.frontDesk.salary)
             }
         }
     }

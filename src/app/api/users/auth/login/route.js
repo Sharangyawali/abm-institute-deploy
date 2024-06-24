@@ -9,11 +9,16 @@ export async function POST(req) {
   try {
     const { email, password } = await req.json();
     if (email && password) {
-      let user = await prisma.User.findUnique({ 
+      let user = await prisma.user.findFirst({ 
         where:{
-          email:email
+          email:email,
+          OR:[
+            {deleted:false},
+            {deleted:null}
+          ]
         }
        });
+       console.log(user)
       if (user) {
         if(user.isverified===false){
           return NextResponse.json({

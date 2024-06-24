@@ -19,6 +19,9 @@ if(authToken&&role){
       else if(payload.role==='Teacher'){
         return NextResponse.redirect(new URL("/teacher/attendance",request.url))
       }
+      else if(payload.role==='Accounting'){
+        return NextResponse.redirect(new URL("/accountant/dashboard",request.url))
+      }
     } catch (error) {
       console.log("error in token verification")
     }
@@ -27,6 +30,8 @@ if(authToken&&role){
 // Admin apis  protected routes
 const protectedRoute1=request.nextUrl.pathname.startsWith('/api/admin/')||request.nextUrl.pathname.startsWith('/admin/')
 const protectedRoute2=request.nextUrl.pathname.startsWith('/api/front-desk/')||request.nextUrl.pathname.startsWith('/front-desk/')
+const protectedRoute3=request.nextUrl.pathname.startsWith('/api/accountant/')||request.nextUrl.pathname.startsWith('/accountant/')
+const protectedRoute4=request.nextUrl.pathname.startsWith('/api/teacher/')||request.nextUrl.pathname.startsWith('/teacher/')
 if(protectedRoute1){
   try {
           if(!authToken){
@@ -47,6 +52,11 @@ if(protectedRoute1){
               return NextResponse.redirect(new URL("/login",request.url))
             }
               const {payload} = await jwtVerify(authToken, getJwtSecretKey());
+              if(request.nextUrl.pathname.startsWith('/front-desk/')){
+                if(payload.role!=='FrontDesk'){
+                 return NextResponse.redirect(new URL("/login",request.url))
+                }
+              }
              if(payload.role!=='FrontDesk'&&payload.role!=='Admin'){
               return NextResponse.redirect(new URL("/login",request.url))
              }
@@ -54,8 +64,44 @@ if(protectedRoute1){
               return NextResponse.redirect(new URL("/login",request.url))
           }
     }
-
-
+    
+    if(protectedRoute3){
+      try {
+              if(!authToken){
+                return NextResponse.redirect(new URL("/login",request.url))
+              }
+                const {payload} = await jwtVerify(authToken, getJwtSecretKey());
+                if(request.nextUrl.pathname.startsWith('/accountant/')){
+                  if(payload.role!=='Accounting'){
+                   return NextResponse.redirect(new URL("/login",request.url))
+                  }
+                }
+               if(payload.role!=='Accounting'&&payload.role!=='Admin'){
+                return NextResponse.redirect(new URL("/login",request.url))
+               }
+            } catch (error) {
+                return NextResponse.redirect(new URL("/login",request.url))
+            }
+      }
+      
+      if(protectedRoute4){
+        try {
+                if(!authToken){
+                  return NextResponse.redirect(new URL("/login",request.url))
+                }
+                  const {payload} = await jwtVerify(authToken, getJwtSecretKey());
+                  if(request.nextUrl.pathname.startsWith('/teacher/')){
+                    if(payload.role!=='Teacher'){
+                     return NextResponse.redirect(new URL("/login",request.url))
+                    }
+                  }
+                 if(payload.role!=='Teacher'&&payload.role!=='Admin'){
+                  return NextResponse.redirect(new URL("/login",request.url))
+                 }
+              } catch (error) {
+                  return NextResponse.redirect(new URL("/login",request.url))
+              }
+        }
 }
 export const config = {
   matcher: [

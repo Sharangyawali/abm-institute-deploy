@@ -13,8 +13,9 @@ import generator from 'generate-password'
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import toast from 'react-hot-toast'
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { setLoadingTrue,setLoadingFalse } from "@/store/loadingShow/loadingShow";
+import { fetchVisitorsData,fetchAccountantData,fetchFrontDeskData,fetchStudentData,fetchTeacherData } from "@/store/employeesDetails/employeesDetailsThunk";
 const Navbar = () => {
   const router = useRouter();
   const dispatch=useDispatch()
@@ -30,9 +31,58 @@ const Navbar = () => {
   const[loading,setLoading]=useState(false)
   const[acceptModal,setAcceptModal]=useState(false)
   const[declineModal,setDeclineModal]=useState(false)
+  const [search,setSearch]=useState('')
+  const [users,setUsers]=useState([])
+  const [searchShow,setSearchShow]=useState(false)
+const [result,setResult]=useState([])
+
+  const teachers = useSelector((state) => state.employeeDetails.teachers);
+  const frontDesk = useSelector((state) => state.employeeDetails.frontDesks);
+  const accountant = useSelector((state) => state.employeeDetails.accountants);
+  const visitors = useSelector((state) => state.employeeDetails.visitors);
+  const student=useSelector((state)=>state.employeeDetails.students);
+
   useEffect(() => {
     getNotifications();
-  }, []);
+    if (teachers.length === 0) {
+      dispatch(fetchTeacherData());
+    }
+    if (accountant.length === 0) {
+      dispatch(fetchAccountantData());
+    }
+    if (frontDesk.length === 0) {
+      dispatch(fetchFrontDeskData());
+    }
+    if(visitors.length===0){
+      dispatch(fetchVisitorsData())
+    }
+    if(student.length===0){
+      dispatch(fetchStudentData())
+    }
+    
+  }, [dispatch]);
+
+
+  useEffect(()=>{
+    let details=[]
+    const teacherDetail=teachers.map((teachers,index)=>({
+      ...teachers,role:'teacher'
+    }))
+    const frontDeskDetail=frontDesk.map((fd,index)=>({
+      ...fd,role:'frontDesk'
+    }))
+    const accountantDetail=accountant.map((acc,index)=>({
+      ...acc,role:'accountant'
+    }))
+    const studentsDetails=student.map((stud,index)=>({
+      ...stud,role:'student'
+    }))
+    const visitorDetails=visitors.map((vst,index)=>({
+      ...vst,role:'visitor'
+    }))
+    details=[...details,...teacherDetail,...frontDeskDetail,...accountantDetail,...studentsDetails,...visitorDetails]
+    setUsers(details)
+  },[teachers,frontDesk,accountant,visitors,student])
 
   const getNotifications = async () => {
     console.log("called ");
@@ -86,6 +136,51 @@ const Navbar = () => {
       }
     }
   }
+
+  const handleSearch=(val)=>{
+    setSearch(val)
+    if(val.length>0){
+      const showingAre=[]
+      users.forEach((emp,index)=>{
+        const value=val.toLowerCase()
+        if(emp.firstName&&emp.lastName&&emp.role==='visitor'){
+         const name=`${emp.firstName} ${emp.lastName}`
+         const nameToLower=name.toLowerCase()
+         if(value && nameToLower.includes(value)){
+           showingAre.push ({name:name,role:'visitor',detail:emp})
+         }
+       }
+       else if(emp.firstName && emp.lastName&&emp.role==='student'){
+         const name=`${emp.firstName} ${emp.lastName}`
+         const nameToLower=name.toLowerCase()
+         if(value && nameToLower.includes(value)){
+           showingAre.push ({name:name,role:'student',detail:emp})
+         }
+       }
+        else if(emp.name && emp.role ){
+          const name=emp.name.toLowerCase()
+          if(value && name.includes(value)){
+            showingAre.push({name:emp.name,role:emp.role,detail:emp})
+          }
+        }
+      })
+      if(showingAre&&showingAre.length>0){
+        setSearchShow(true)
+      }
+      setResult(showingAre)
+      console.log(showingAre)
+    }
+    else{
+      setResult([])
+    }
+      }
+
+
+      const handleOnClick=()=>{
+        setSearchShow(false)
+        setResult([])
+      }
+      
   const rejectUser=async()=>{
       if(user.id){
         dispatch(setLoadingTrue())
@@ -109,17 +204,16 @@ const Navbar = () => {
     <div className="flex flex-row w-[100%] h-[7vh] bg-white items-center pl-[40px] justify-between">
       
       <div className="flex flex-row items-center px-[-40px] gap-[30px]">
-        {/* <div className="h-[30px] hidden laptop:block w-[10px]"></div> */}
-        {/* <div className="h-[30px] ml-[-30px] tablet:ml-[30px] block font-extrabold text-[20px]">
-        ADM
-      </div> */}
+      
       </div>
-      <div className="w-[50%] tablet:w-[40%] laptop:w-[30%] h-[40px] flex flex-row justify-center items-center border-[2px] rounded-2xl px-[10px]">
+      <div className="w-[50%] relative tablet:w-[40%] laptop:w-[30%] h-[40px] flex flex-row justify-center items-center border-[2px] rounded-2xl px-[10px]">
         <div className="flex items-center w-[80%]">
           <input
             className="w-[100%] px-[10px] outline-none"
             type="text"
-            name=""
+            name="search"
+            value={search}
+            onChange={(e)=>handleSearch(e.target.value)}
             placeholder="Search anyone here"
           />
         </div>
@@ -128,6 +222,36 @@ const Navbar = () => {
             <GoSearch size={25} />
           </button>
         </div>
+
+{
+  searchShow&&(
+        <div className="absolute px-[5px] max-h-[300px] rounded-2xl z-[99] bg-white w-[100%]  top-[45px] flex flex-col gap-[8px] overflow-y-scroll scrollbar-thin  scrollbar-thumb-[#420177] ">
+          {result.map((res,index)=>{
+            return(
+          <Link href={`${(res.role==='accountant'||res.role==='frontDesk'||res.role==='teacher')?`/admin/staff/${res.role}/${res.detail.id}`:`/admin/${res.role}/${res.detail.id}`}`} className="w-[100%]  min-h-[100px] bg-white text-black  rounded-xl shadow-lg hover:bg-[#f0f0f0] shadow-[#dddddd] flex items-center tablet:px-[20px] justify-between" key={index} onClick={handleOnClick}>
+        <div className="bg-[#d4d4d4] rounded-full ">
+            <img
+              className="w-[50px] h-[50px] rounded-full"
+              src="/profile-demo.jpg"
+            ></img>
+          </div>
+          <div className="text-[15px] text-ellipsis text-black w-[80%] relative flex flex-col">
+            <strong>{res.name}</strong>
+            <span className="text-[12px] font-bold capitalize">{res.role}</span>
+          </div>
+        </Link>
+
+            )
+          })}
+
+          </div>
+
+  )
+}
+
+
+
+
       </div>
       <div className="flex flex-row items-center justify-end gap-[10%]">
         <div

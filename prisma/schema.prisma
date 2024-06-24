@@ -16,6 +16,7 @@ model User {
   email      String      @unique
   phone      String      @unique
   password   String?
+  deleted   Boolean?
   role       Type
   isverified Boolean     @default(false)
   createdAt  DateTime    @default(now())
@@ -42,6 +43,8 @@ model Visitors {
   phone         String   @unique
   email         String
   gender        Gender
+  credits       creditDetail[]
+  debits        debitDetail[]
   history       Json[]
   visit         Visits[]
 }
@@ -70,6 +73,7 @@ model Teachers {
   name          String
   streetAddress String?
   city          String?
+    deleted   Boolean?
   state         String?
   phone         String           @unique
   email         String           @unique
@@ -88,6 +92,7 @@ model FrontDesks {
   name          String
   streetAddress String?
   city          String?
+    deleted   Boolean?
   state         String?
   phone         String           @unique
   email         String           @unique
@@ -105,6 +110,7 @@ model Accountant {
   name          String
   streetAddress String?
   city          String?
+    deleted   Boolean?
   state         String?
   phone         String           @unique
   email         String           @unique
@@ -178,6 +184,8 @@ model Transaction {
   purpose String?
   feePayment FeePayments?
   salaryPayment SalaryPayments?
+  credit creditDetail?
+  debit debitDetail?
   createdAt    DateTime    @default(now())
   todays_date DateTime  
 }
@@ -195,6 +203,30 @@ model SalaryPayments {
   accounatntId String?     
   transaction Transaction @relation(fields: [transactionId],references: [id]) 
   transactionId String @unique
+}
+
+model creditDetail{
+  id String @id @default(cuid())
+  amount  Decimal
+  method PaymentMethods
+  name String?
+  visitorId  String?
+  visitor  Visitors? @relation(fields: [visitorId],references: [id]) 
+    transaction Transaction @relation(fields: [transactionId],references: [id]) 
+  transactionId String @unique
+  createdAt DateTime @default(now())
+}
+
+model debitDetail{
+  id String @id @default(cuid())
+  amount  Decimal
+  method PaymentMethods
+  name String?
+  visitorId  String?
+  visitor  Visitors? @relation(fields: [visitorId],references: [id]) 
+    transaction Transaction @relation(fields: [transactionId],references: [id]) 
+  transactionId String @unique
+  createdAt DateTime @default(now())
 }
 
 model Attendance {

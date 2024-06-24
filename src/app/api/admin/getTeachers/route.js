@@ -4,7 +4,16 @@ export const dynamic = "force-dynamic";
 
 export async function GET(req){
     try {
-        const teachers=await prisma.Teachers.findMany({
+        const teachers=await prisma.teachers.findMany({
+            where:{
+                OR:[
+                    {deleted:false},
+                    {deleted:null}
+                  ]
+            },
+            include:{
+                user:true
+            }
         })
         
         return NextResponse.json({

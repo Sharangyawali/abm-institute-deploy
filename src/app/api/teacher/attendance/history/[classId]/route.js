@@ -9,7 +9,11 @@ export async function GET(req, { params }) {
         classId: classId,
       },
       include: {
-        class: true,
+        class: {
+          include:{
+            teacher:true
+          }
+        }
       },
       orderBy: {
         createdAt: "desc",

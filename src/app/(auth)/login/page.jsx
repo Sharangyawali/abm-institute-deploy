@@ -46,6 +46,12 @@ const Login = () => {
         else if(result.role==='FrontDesk'){
           router.push('/front-desk/dashboard')
         }
+        else if(result.role==='Accounting'){
+          router.push('/accountant/dashboard')
+        }
+        else if(result.role==='Teacher'){
+          router.push('/teacher/attendance')
+        }
       }
     }
 

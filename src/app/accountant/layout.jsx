@@ -19,7 +19,7 @@ return(
     (
         <>
         <Navbar/>
-        <main className="flex">
+        <main className="flex min-h-[90vh]">
             {children}
         </main>
         </>

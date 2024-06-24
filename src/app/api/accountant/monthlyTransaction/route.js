@@ -43,7 +43,7 @@ export async function GET(req) {
     }, {});
     
     // Convert grouped object to an array and sort by date in descending order
-    const result = Object.values(groupedTransactions).sort((a, b) => new Date(b.transactions[0].createdAt) - new Date(a.transactions[0].createdAt));
+    const result = Object.values(groupedTransactions).sort((a, b) => new Date(a.transactions[0].createdAt) - new Date(b.transactions[0].createdAt));
 
     return NextResponse.json({
       success: true,
