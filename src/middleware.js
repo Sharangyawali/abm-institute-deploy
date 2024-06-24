@@ -110,7 +110,11 @@ export const config = {
     "/api/admin/:path*",
     "/admin/:path*",
     "/api/front-desk/:path*",
-    "/front-desk/:path*"
+    "/front-desk/:path*",
+    "/api/accountant/:path*",
+    "/accountant/:path*",
+    "/api/teacher/:path*",
+    "/teacher/:path*"
   ],
 }
 
