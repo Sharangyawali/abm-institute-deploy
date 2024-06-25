@@ -13,6 +13,7 @@ import generator from 'generate-password'
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import toast from 'react-hot-toast'
+import { IoLogOut } from "react-icons/io5";
 import { useDispatch, useSelector} from "react-redux";
 import { setLoadingTrue,setLoadingFalse } from "@/store/loadingShow/loadingShow";
 import { fetchVisitorsData,fetchAccountantData,fetchFrontDeskData,fetchStudentData,fetchTeacherData } from "@/store/employeesDetails/employeesDetailsThunk";
@@ -200,6 +201,20 @@ const [result,setResult]=useState([])
       }
       }
   }
+
+ const handleLogout=async()=>{
+  let result=await fetch('/api/users/auth/logout',{
+    method:'post'
+  })
+  result=await result.json()
+  if(result.success===true){
+    router.push('/login')
+  }
+  // Cookies.remove('authToken')
+  // Cookies.remove('role')
+// router.push('/login')
+ }
+
   return (
     <div className="flex flex-row w-[100%] h-[7vh] bg-white items-center pl-[40px] justify-between">
       
@@ -266,13 +281,14 @@ const [result,setResult]=useState([])
             <span className="text-white">{notifications.length>9?'+9':notifications.length}</span>
           </div>
         </div>
-        <Link href="/account">
-          <MdAccountCircle
-            className="w-[25px] h-[25px] tablet:w-[40px] tablet:h-[40px]"
+        <div>
+          <IoLogOut
+            className="w-[25px] h-[25px] tablet:w-[40px] tablet:h-[40px] cursor-pointer"
             size={25}
             color="black"
+            onClick={handleLogout}
           />
-        </Link>
+        </div>
       </div>
       {showNoti ? (
         <div className="w-[100%] p-[10px] tablet:p-0 tablet:w-[500px] bg-white  absolute top-[7vh] z-[99] right-[1%] rounded-2xl">

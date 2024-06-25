@@ -21,6 +21,7 @@ const page = ({ params }) => {
             toast.error(result.message)
         }
         else{
+          console.log(result.student)
             setDetail(result.student)
         }
     }
@@ -78,13 +79,19 @@ const page = ({ params }) => {
       <div className="flex w-[100%] justify-start">
       <Link href={`/admin/student/feePayment/${detail.id}`} className="w-[150px] my-[15px] h-[30px] flex items-center justify-center bg-[#a25dda] font-semibold text-white float-end rounded-lg cursor-pointer">View FeePayment</Link>
       </div>
-      {/* <div className="w-[100%] text-[18px] font-semibold text-[#3f3f3f]">
-        Attendance
+      <div className="w-[100%] text-[18px] font-semibold text-[#3f3f3f]">
+        Classes
         <hr></hr>
       </div>
-      <div className="flex w-[100%] justify-start">
-      <Link href={`/admin/student/feePayment/${detail.id}`} className="w-[150px] my-[15px] h-[30px] flex items-center justify-center bg-[#a25dda] font-semibold text-white float-end rounded-lg cursor-pointer">View Transactions</Link>
-      </div> */}
+      <div className="flex w-[100%] justify-start gap-[5px]">
+      {detail.classes.map((classs,index)=>{
+          return(
+            <Link href={`/admin/class/history/class/${classs.class.id}`} className="w-[120px] my-[15px] h-[30px] flex items-center justify-center bg-[#a25dda] font-semibold text-white float-end rounded-lg cursor-pointer" key={index}>
+              {classs.class.className}
+            </Link>
+          )
+        })}
+      </div>
     </div>
   </div>
     }

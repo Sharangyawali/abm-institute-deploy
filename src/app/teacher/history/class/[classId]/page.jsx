@@ -54,7 +54,10 @@ const page = ({ params }) => {
     <div className="w-[100%] flex flex-col p-[20px] items-center justify-center">
       {loading ? (
         <CircularProgress className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" />
-      ) : (
+      ) : 
+      
+      attendance.length>0?
+      (
         <div className="w-[95%] h-[750px] bg-white flex flex-col items-center justify-center">
           <div className="w-[100%] h-[80px] bg-white  flex flex-col justify-center items-center px-[100px]">
             <div className="text-[22px] text-[blue] font-serif">
@@ -111,7 +114,7 @@ const page = ({ params }) => {
             </table>
           </div>
         </div>
-      )}
+      ):'No any data to show'}
     </div>
   );
 };

@@ -14,6 +14,7 @@ import BarChartGraph from "../components/BarChartGraph";
 import { CircularProgress } from "@mui/joy";
 import { useSelector,useDispatch } from 'react-redux';
 import { fetchAccountantData, fetchFrontDeskData, fetchStudentData, fetchTeacherData } from '@/store/employeesDetails/employeesDetailsThunk';
+import { IoMdArrowDropdown } from "react-icons/io";
 
 const page = () => {
   const dispatch=useDispatch()
@@ -23,7 +24,12 @@ const page = () => {
   const accountant=useSelector((state)=>state.employeeDetails.accountants)
   const [monthlyTransactions, setMonthlyTransactions] = useState([]);
   const [transactions, setTransactions] = useState([]);
+  const [dailyTransactions,setDailyTransactions]=useState([])
+  const [weeklyTransactions,setWeeklyTransactions]=useState([])
+  const [monthlyTotalTransactions,setMonthlyTotalTransactions]=useState([])
   const [openRows, setOpenRows] = useState([]);
+  const [showOptions, setShowOptions] = useState(false);
+  const [selectedTime, setSelectedTime] = useState("Daily");
 
   // const [teachers, setTeachers] = useState([]);
   // const [students, setStudents] = useState([]);
@@ -57,6 +63,7 @@ const page = () => {
     getLatestTransaction()
   }, [dispatch]);  
 
+  const time=[{name:'Daily',value:'Daily'},{name:'Weekly',value:'Weekly'},{name:'Monthly',value:'Monthly'}]
   useEffect(() => {
     calculateGenders(students, teachers, accountant, frontDesk);
   }, [students, teachers, accountant, frontDesk]);
@@ -156,11 +163,28 @@ const page = () => {
     });
     result = await result.json();
     if (result.success === true) {
-      console.log("transactions are", result.transactions);
       setTransactions(result.transactions);
+      console.log(result.weekly)
+      setDailyTransactions(result.transactions)
+      setWeeklyTransactions(result.weekly)
+      setMonthlyTotalTransactions(result.monthly)
       getMonthlyTransactions();
     }
   };
+
+  const handleChangeTime=(time)=>{
+   setSelectedTime(time)
+   if(time==='Daily'){
+    setTransactions(dailyTransactions)
+   }
+   else if(time==='Weekly'){
+    setTransactions(weeklyTransactions)
+   }
+   else if(time==='Monthly'){
+    setTransactions(monthlyTotalTransactions)
+   }
+   setShowOptions(false)
+  }
 
   const getLatestTransaction=async()=>{
     let result=await fetch("/api/accountant/latestTransactions",{
@@ -212,7 +236,29 @@ const page = () => {
       {/* COmbination of simple line and pie chart */}
       <div className="w-[100%] mt-6 flex flex-col laptop:flex-row justify-between items-center gap-4">
         {/* SimpleLineBarGrapph section */}
-        <div className="w-[90%] tablet-w[70%] laptop:w-[63%] h-[350px] flex  justify-center items-center rounded-2xl shadow-[#e9e9e9] shadow-xl px-[10px]  ">
+        <div className="w-[90%] tablet-w[70%] laptop:w-[63%] h-[350px] flex flex-col  justify-center items-start rounded-2xl shadow-[#e9e9e9] shadow-xl px-[10px]  ">
+        <div className="relative text-[15px] flex flex-col h-[50px] font-semibold w-[125px]">
+            <div
+              className="flex justify-between items-center w-[100%]"
+              onClick={() => setShowOptions(!showOptions)}
+            >
+              <div>{selectedTime}</div>
+              <IoMdArrowDropdown className="ml-[8px]" size={25} />
+            </div>
+            {showOptions && (
+              <div className="absolute h-[100px] top-[30px] w-[135px] flex flex-col justify-start rounded-md bg-[#e9e9e9] z-[99] right-[0px]">
+                {time.map((tim, index) => (
+                  <div
+                    className="w-[100%] h-[33px] text-black border-[#3a3a3a] hover:bg-[#cecdcd] tablet:px-[5px] flex justify-start cursor-pointer"
+                    key={index}
+                    onClick={() => handleChangeTime(tim.value)}
+                  >
+                    {tim.name}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
               <table className="w-full text-sm text-left flex flex-col rtl:text-right text-gray-500 ">
                 <thead className="w-full text-xs text-gray-700 uppercase bg-[#f3f3f3] flex">
                   <tr className="w-full flex">
@@ -228,7 +274,7 @@ const page = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="h-[350px] w-full overflow-y-scroll scrollbar-thin  scrollbar-thumb-[#420177] flex flex-col">
+                <tbody className="h-[300px] w-full overflow-y-scroll scrollbar-thin  scrollbar-thumb-[#420177] flex flex-col">
                   {transactions.map((item, index) => (
                     <React.Fragment key={index}>
                       <tr
@@ -245,13 +291,15 @@ const page = () => {
                           />
                         </td>
                         <td className="px-4 py-2 w-[25%]">
-                          {format(new Date(item.todays_date), "dd MMMM yyyy")}
+                          {selectedTime==='Daily'? format(new Date(item.todays_date), "dd MMMM yyyy"):selectedTime==='Monthly'?item.month:selectedTime==='Weekly'?item.week:''}
                         </td>
                         <td className="px-4 py-2 w-[25%]">
-                          {item._count.amount}
+                          {selectedTime==='Daily'?item._count.amount:item.count}
+                          {/* {item._count.amount} */}
                         </td>
                         <td className="px-4 py-2 w-[25%]">
-                          NRP {item._sum.amount}
+                        NRP {selectedTime==='Daily'?item._sum.amount:item.total_amount}
+                           {/* {item._sum.amount} */}
                         </td>
                       </tr>
                       {openRows.includes(index) &&

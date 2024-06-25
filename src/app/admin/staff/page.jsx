@@ -6,7 +6,6 @@ import { MdDelete, MdLockOutline } from "react-icons/md";
 import {
   fetchAccountantData,
   fetchFrontDeskData,
-  fetchStudentData,
   fetchTeacherData,
 } from "@/store/employeesDetails/employeesDetailsThunk";
 import generator from 'generate-password'

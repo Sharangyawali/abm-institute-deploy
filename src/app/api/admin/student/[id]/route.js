@@ -8,6 +8,13 @@ export async function GET(req,{params}){
             where:{
                 id:id
             },
+            include:{
+                classes:{
+                    include:{
+                        class:true
+                    }
+                }
+            }
         })
         if(student){
             return NextResponse.json({

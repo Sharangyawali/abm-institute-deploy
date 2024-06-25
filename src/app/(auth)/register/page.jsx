@@ -54,16 +54,16 @@ const page = () => {
         }
       }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-300">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-500 to-pink-500">
       {
         loading?
         <CircularProgress/>:
 
-      <div className="max-w-md text-black w-full p-6 bg-white rounded-md shadow-md">
+      <div className="max-w-md text-black w-full p-6 bg-white rounded-md shadow-md flex flex-col justify-evenly items-center">
   
-            <h2 className="text-2xl text-black font-bold mb-4">Register</h2>
-            <form>
-              <div className="mb-4">
+            <h2 className="text-2xl text-black font-bold mb-4 w-[100%] text-center">Register</h2>
+            <form className="w-[100%] flex flex-col justify-evenly items-center">
+              <div className="mb-4 w-[80%]">
                 <label
                   htmlFor="username"
                   className="  text-sm font-medium text-gray-600 inline"
@@ -83,7 +83,7 @@ const page = () => {
               :''  
               }
               </div>
-              <div className="mb-4">
+              <div className="mb-4 w-[80%]">
                 <label
                   htmlFor="phoneNumber"
                   className="block  text-sm font-medium text-gray-600"
@@ -103,7 +103,7 @@ const page = () => {
               :''  
               }
               </div>
-              <div className="mb-4">
+              <div className="mb-4 w-[80%]">
                 <label
                   htmlFor="email"
                   className="block  text-sm font-medium text-gray-600"
@@ -125,7 +125,7 @@ const page = () => {
               
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 w-[80%]">
                 <label htmlFor='category' className='block text-sm font-medium text-gray-600'>
                   Role :
                 </label>
@@ -148,9 +148,10 @@ const page = () => {
               :''  
               }
               </div>
+
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-md hover:bg-gradient-to-l w-[80%]"
                 onClick={register}
               >
                 Register

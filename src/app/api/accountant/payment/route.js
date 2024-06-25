@@ -83,10 +83,57 @@ try {
           transactions,
         });
       }
+
+      const transactions = await prisma.transaction.findMany();
+    // Group transactions by month
+    const groupedByMonth = transactions.reduce((acc, transaction) => {
+      const month = new Date(transaction.todays_date).toLocaleString('default', { month: 'long', year: 'numeric' });
+      if (!acc[month]) {
+        acc[month] = {
+          month,
+          transactions: [],
+          total_amount: 0,
+          count: 0,
+        };
+      }
+      acc[month].transactions.push(transaction);
+      acc[month].total_amount += Number(transaction.amount);
+      acc[month].count += 1;
+      return acc;
+    }, {});
+
+    const resultByMonth = Object.values(groupedByMonth).sort((a, b) => new Date(b.month) - new Date(a.month));
+
+    // Group transactions by week
+    const groupedByWeek = transactions.reduce((acc, transaction) => {
+      const currentDate = new Date(transaction.todays_date);
+      const weekStart = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay()));
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+      const weekLabel = `${weekStart.toISOString().split('T')[0]} to ${weekEnd.toISOString().split('T')[0]}`;
+      
+      if (!acc[weekLabel]) {
+        acc[weekLabel] = {
+          week: weekLabel,
+          transactions: [],
+          total_amount: 0,
+          count: 0,
+        };
+      }
+      acc[weekLabel].transactions.push(transaction);
+      acc[weekLabel].total_amount += Number(transaction.amount);
+      acc[weekLabel].count += 1;
+      return acc;
+    }, {});
+
+    const resultByWeek = Object.values(groupedByWeek).sort((a, b) => new Date(b.week.split(' to ')[0]) - new Date(a.week.split(' to ')[0]));
+
       return NextResponse.json({
         success:true,
         message:"Successfully obtained",
-        transactions:result
+        transactions:result,
+        monthly:resultByMonth,
+        weekly:resultByWeek
       },{
         status:200
       })

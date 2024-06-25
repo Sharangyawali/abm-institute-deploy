@@ -14,6 +14,9 @@ import { FaPersonShelter } from "react-icons/fa6";
 import { IoPersonAdd } from "react-icons/io5";
 import { SiGoogleclassroom } from "react-icons/si";
 import { MdOutlinePayment } from "react-icons/md";
+import { PiStudentFill } from "react-icons/pi";
+import { IoIosPersonAdd } from "react-icons/io";
+import { FaStore } from "react-icons/fa";
 const Sidebar = ({show}) => {
   const pathName = usePathname()
   return (
@@ -59,15 +62,15 @@ const Sidebar = ({show}) => {
   }
                   
               </Link>
-              <Link href='/docs' className={pathName==='/docs'?"flex items-center w-full h-10 px-3 mt-2 rounded text-[#272727] bg-gray-300":"flex items-center w-full h-10 px-3 mt-2 rounded hover:text-[#272727] hover:bg-gray-300"} >
-      <SlDocs className='w-[25px] h-[25px]' color='black'/>
+              <Link href='/admin/student' className={pathName.startsWith('/admin/student')?"flex items-center w-full h-10 px-3 mt-2 rounded text-[#272727] bg-gray-300":"flex items-center w-full h-10 px-3 mt-2 rounded hover:text-[#272727] hover:bg-gray-300"} >
+      <PiStudentFill className='w-[25px] h-[25px]' color='black'/>
       {show===true?
-    (<span className="ml-2 text-sm font-medium">Docs</span>):
+    (<span className="ml-2 text-sm font-medium">Student</span>):
     ''
   }
                   
               </Link>
-              <Link href='/admin/visitors' className={pathName==='/admin/visitors'?"flex items-center w-full h-10 px-3 mt-2 rounded text-[#272727] bg-gray-300":"flex items-center w-full h-10 px-3 mt-2 rounded hover:text-[#272727] hover:bg-gray-300"} >
+              <Link href='/admin/visitor' className={pathName.startsWith('/admin/visitor')?"flex items-center w-full h-10 px-3 mt-2 rounded text-[#272727] bg-gray-300":"flex items-center w-full h-10 px-3 mt-2 rounded hover:text-[#272727] hover:bg-gray-300"} >
                   <FaPersonShelter className='w-[25px] h-[25px]' color='black'/>
         {show===true?
     (<span className="ml-2 text-sm font-medium">Visitors</span>):
@@ -75,23 +78,31 @@ const Sidebar = ({show}) => {
   }
                   
               </Link>
-              <Link href='/messages' className={pathName==='/messages'?"flex items-center w-full h-10 px-3 mt-2 rounded text-[#272727] bg-gray-300":"flex items-center w-full h-10 px-3 mt-2 rounded hover:text-[#272727] hover:bg-gray-300"} >
-      <span className="relative top-[-10px] left-0 w-2 h-2 ml-[-2px] bg-indigo-500 rounded-full"></span>
-      <LuMessagesSquare className='w-[25px] h-[25px]' color='black'/>
+              <Link href='/admin/admission' className={pathName==='/admin/admission'?"flex items-center w-full h-10 px-3 mt-2 rounded text-[#272727] bg-gray-300":"flex items-center w-full h-10 px-3 mt-2 rounded hover:text-[#272727] hover:bg-gray-300"} >
+      {/* <span className="relative top-[-10px] left-0 w-2 h-2 ml-[-2px] bg-indigo-500 rounded-full"></span> */}
+      <IoIosPersonAdd className='w-[25px] h-[25px]' color='black'/>
         {show===true?
-    (<span className="ml-2 text-sm font-medium">Messages</span>):
+    (<span className="ml-2 text-sm font-medium">Admission</span>):
+    ''
+  }
+              </Link>
+              <Link href='/admin/store/allProducts' className={pathName.startsWith('/admin/store')?"flex items-center w-full h-10 px-3 mt-2 rounded text-[#272727] bg-gray-300":"flex items-center w-full h-10 px-3 mt-2 rounded hover:text-[#272727] hover:bg-gray-300"} >
+      {/* <span className="relative top-[-10px] left-0 w-2 h-2 ml-[-2px] bg-indigo-500 rounded-full"></span> */}
+      <FaStore className='w-[25px] h-[25px]' color='black'/>
+        {show===true?
+    (<span className="ml-2 text-sm font-medium">Store</span>):
     ''
   }
               </Link>
           </div>
       </div>
-      <Link href='/account' className="flex items-center justify-center w-full h-16 mt-auto bg-gray-200 hover:text-[#272727] hover:bg-gray-300">
-  <MdAccountCircle className='w-[25px] h-[25px]' color='black'/>
+      {/* <Link href='/account' className="flex items-center justify-center w-full h-16 mt-auto bg-gray-200 hover:text-[#272727] hover:bg-gray-300">
+  <IoIosPersonAdd className='w-[25px] h-[25px]' color='black'/>
     {show===true?
     (<span className="ml-2 text-sm font-medium">Account</span>):
     ''
   }
-      </Link>
+      </Link> */}
   </div>
   </div>
   )
