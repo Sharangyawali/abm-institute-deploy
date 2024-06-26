@@ -1,10 +1,11 @@
 "use client";
 import { CircularProgress } from "@mui/joy";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-
 const page = () => {
+  const router=useRouter()
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState();
   useEffect(() => {
@@ -16,7 +17,8 @@ const page = () => {
     result = await result.json();
     setLoading(false);
     if (result.success === false) {
-      toast.error(result.message);
+      router.push('/login')
+      toast.error(result.message)
     } else {
       setDetail(result.detail);
       console.log(result.detail);
@@ -29,7 +31,10 @@ const page = () => {
         <CircularProgress className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" />
       ) : (
         <div className=" w-[100%] gap-[20px]  pl-[20px] flex mt-[30px] flex-wrap overflow-y-auto scrollbar-thin  scrollbar-thumb-[#420177] scrollbar-track-[#EBCBF5] ">
-          {detail.teacher.class.length === 0 ? (
+          {!detail.teacher?
+          ''
+          :
+          detail.teacher.class.length === 0 ? (
             <div className=" text-[20px] font-semibold text-[#070606] margin-auto">
               Classes are seen here...
             </div>

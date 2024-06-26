@@ -29,12 +29,35 @@ export async function GET(){
                 }
             }
         })
+        if(user){
+            return NextResponse.json({
+                success:true,
+                message:"Successfully obtained details",
+                detail:user
+            },{status:200})
+        }
+        else{
+            const response=NextResponse.json({
+                success:false,
+                message:'Unauthorized Access'
+            },{
+                status:403
+            })
+            response.cookies.set("authToken","",{
+                httpOnly:true,
+                secure:true,
+                sameSite:'strict',
+                expires:new Date(0)
+              })
+              response.cookies.set("role","",{
+                httpOnly:true,
+                secure:true,
+                sameSite:'strict',
+                expires:new Date(0)
+              })
+              return response
+        }
 
-        return NextResponse.json({
-            success:true,
-            message:"Successfully obtained details",
-            detail:user
-        },{status:200})
     } catch (error) {
         console.log(error)
         return NextResponse.json({

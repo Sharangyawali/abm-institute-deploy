@@ -62,13 +62,13 @@ model Visits {
   phone     String
   purpose   String
   visitTime DateTime @default(now())
-  visitor   Visitors @relation(fields: [visitorId], references: [id])
+  visitor   Visitors @relation(fields: [visitorId], references: [id],onDelete: Cascade)
   visitorId String
 }
 
 model Teachers {
   id            String           @id @default(cuid())
-  user          User             @relation(fields: [userId], references: [id])
+  user          User             @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId        String           @unique
   name          String
   streetAddress String?
@@ -87,7 +87,7 @@ model Teachers {
 
 model FrontDesks {
   id            String           @id @default(cuid())
-  user          User             @relation(fields: [userId], references: [id])
+  user          User             @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId        String           @unique
   name          String
   streetAddress String?
@@ -105,7 +105,7 @@ model FrontDesks {
 
 model Accountant {
   id            String           @id @default(cuid())
-  user          User             @relation(fields: [userId], references: [id])
+  user          User             @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId        String           @unique
   name          String
   streetAddress String?
@@ -126,7 +126,7 @@ model Classes {
   className  String
   startTime  String
   endTime    String
-  teacher    Teachers       @relation(fields: [teachersId], references: [id])
+  teacher    Teachers       @relation(fields: [teachersId], references: [id],onDelete: Cascade)
   teachersId String
   students   ClassStudent[]
   attendance Attendance[]
@@ -154,8 +154,8 @@ model ClassStudent {
   id        String   @id @default(cuid())
   classId   String
   studentId String
-  class     Classes  @relation(fields: [classId], references: [id])
-  student   Students @relation(fields: [studentId], references: [id])
+  class     Classes  @relation(fields: [classId], references: [id],onDelete: Cascade)
+  student   Students @relation(fields: [studentId], references: [id],onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@unique([classId, studentId])
@@ -165,8 +165,8 @@ model FeePayments {
   id        String   @id @default(cuid())
   amount    Decimal?
   method  PaymentMethods
-  student   Students @relation(fields: [studentId], references: [id])
-  transaction Transaction @relation(fields: [transactionId],references: [id]) 
+  student   Students @relation(fields: [studentId], references: [id],onDelete: Cascade)
+  transaction Transaction @relation(fields: [transactionId],references: [id],onDelete: Cascade) 
   transactionId String @unique
   studentId String
   createdAt DateTime @default(now())
@@ -195,13 +195,13 @@ model SalaryPayments {
   amount       Decimal?
   method  PaymentMethods
   createdAt    DateTime    @default(now())
-  teacher      Teachers?   @relation(fields: [teacherId], references: [id])
+  teacher      Teachers?   @relation(fields: [teacherId], references: [id],onDelete: Cascade)
   teacherId    String?     
-  frontDesk    FrontDesks? @relation(fields: [frontDeskId], references: [id])
+  frontDesk    FrontDesks? @relation(fields: [frontDeskId], references: [id],onDelete: Cascade)
   frontDeskId  String?     
-  accountant   Accountant? @relation(fields: [accounatntId], references: [id])
+  accountant   Accountant? @relation(fields: [accounatntId], references: [id],onDelete: Cascade)
   accounatntId String?     
-  transaction Transaction @relation(fields: [transactionId],references: [id]) 
+  transaction Transaction @relation(fields: [transactionId],references: [id],onDelete: Cascade) 
   transactionId String @unique
 }
 
@@ -211,8 +211,8 @@ model creditDetail{
   method PaymentMethods
   name String?
   visitorId  String?
-  visitor  Visitors? @relation(fields: [visitorId],references: [id]) 
-    transaction Transaction @relation(fields: [transactionId],references: [id]) 
+  visitor  Visitors? @relation(fields: [visitorId],references: [id],onDelete: Cascade) 
+    transaction Transaction @relation(fields: [transactionId],references: [id],onDelete: Cascade) 
   transactionId String @unique
   createdAt DateTime @default(now())
 }
@@ -223,8 +223,8 @@ model debitDetail{
   method PaymentMethods
   name String?
   visitorId  String?
-  visitor  Visitors? @relation(fields: [visitorId],references: [id]) 
-    transaction Transaction @relation(fields: [transactionId],references: [id]) 
+  visitor  Visitors? @relation(fields: [visitorId],references: [id],onDelete: Cascade) 
+    transaction Transaction @relation(fields: [transactionId],references: [id],onDelete: Cascade) 
   transactionId String @unique
   createdAt DateTime @default(now())
 }
@@ -232,7 +232,7 @@ model debitDetail{
 model Attendance {
   id           String      @id @default(cuid())
   classId String 
-  class Classes @relation(fields: [classId],references: [id])
+  class Classes @relation(fields: [classId],references: [id],onDelete: Cascade)
   record Json
   today String 
   createdAt    DateTime    @default(now())

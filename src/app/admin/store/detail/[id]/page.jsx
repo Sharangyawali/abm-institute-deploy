@@ -5,7 +5,9 @@ import toast from "react-hot-toast";
 import { RiPencilFill } from "react-icons/ri";
 import { MdAdd } from "react-icons/md";
 import { RiSubtractFill } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 const page = ({params}) => {
+  const router=useRouter()
   const [detail, setDetail] = useState();
   const [loading, setLoading] = useState(true);
   const [name,setName]=useState('')
@@ -65,6 +67,22 @@ const page = ({params}) => {
     }
   }
 
+  const handleDelete=async()=>{
+    setLoading(true)
+    let result=await fetch(`/api/admin/store/${params.id}`,{
+      method:'delete',
+    })
+    result=await result.json()
+    setLoading(false)
+    if(result.success===false){
+      toast.error(result.message)
+    }
+    else{
+      router.push('/admin/store/allProducts')
+      toast.success(result.message)
+    }
+  }
+
   return (
     <div className="w-[100%] flex justify-center items-center">
       {loading ? (
@@ -100,8 +118,21 @@ const page = ({params}) => {
                         <RiSubtractFill size={23}/>
                 </div>
               </div>
+              <div className="mt-[5px] w-[160px] font-semibold h-[40px] bg-[#f0936a] cursor-pointer hover:bg-[#f06273] rounded-md flex justify-center items-center" onClick={handleDelete}>
+                Delete Product
+              </div>
           </div>
           <div className="w-[100%] laptop:w-[59%] flex flex-col h-[600px] shadow-xl rounded-md justify-evenly px-[10px] ">
+            <div className="w-[100%] text-[18px] font-semibold text-[#3f3f3f]">
+              Profit/Loss
+              <hr></hr>
+            </div>
+            <div className="flex flex-col tablet:flex-row  w-[100%] justify-start gap-[10px] tablet:gap-0">
+            <div className="flex flex-col w-[50%] tablet:h-[80px] justify-between">
+                <span className="font-semibold text-[18px]">{costPrice>sellPrice?'Expected Loss':'Expected Profit'}</span>
+               <span className="mt-1 text-black p-2 w-[95%] border rounded-md">${Math.abs(costPrice-sellPrice)} per quantity</span>
+              </div>
+            </div>
             <div className="w-[100%] text-[18px] font-semibold text-[#3f3f3f]">
               Price Information
               <hr></hr>

@@ -13,44 +13,41 @@ export async function POST(req){
                 status:301
             })
         }
-       const  user=await prisma.user.update({
+       const  user=await prisma.user.delete({
         where:{
             id:userId
-        },
-        data:{
-            deleted:true,
         }
        })
-       if(user.role==='FrontDesk'){
-        await prisma.frontDesks.update({
-            where:{
-                id:accountId
-            },
-            data:{
-                deleted:true
-            }
-        })
-       }
-       else if(user.role==='Accounting'){
-        await prisma.accountant.update({
-            where:{
-                id:accountId
-            },
-            data:{
-                deleted:true
-            }
-        })
-       }
-       else if(user.role==='Teacher'){
-        await prisma.teachers.update({
-            where:{
-                id:accountId
-            },
-            data:{
-                deleted:true
-            }
-        })
-       }
+    //    if(user.role==='FrontDesk'){
+    //     await prisma.frontDesks.update({
+    //         where:{
+    //             id:accountId
+    //         },
+    //         data:{
+    //             deleted:true
+    //         }
+    //     })
+    //    }
+    //    else if(user.role==='Accounting'){
+    //     await prisma.accountant.update({
+    //         where:{
+    //             id:accountId
+    //         },
+    //         data:{
+    //             deleted:true
+    //         }
+    //     })
+    //    }
+    //    else if(user.role==='Teacher'){
+    //     await prisma.teachers.update({
+    //         where:{
+    //             id:accountId
+    //         },
+    //         data:{
+    //             deleted:true
+    //         }
+    //     })
+    //    }
        return NextResponse.json({
         success:true,
         message:"Successfully Deleted Account"

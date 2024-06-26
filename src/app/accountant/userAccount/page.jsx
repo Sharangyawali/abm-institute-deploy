@@ -1,10 +1,12 @@
 "use client";
 import { CircularProgress } from "@mui/joy";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { RiPencilFill } from "react-icons/ri";
 const page = () => {
+  const router=useRouter()
   const [detail, setDetail] = useState();
   const [loading, setLoading] = useState(true);
   const [streetAddress, setStreetAddress] = useState("");
@@ -26,7 +28,8 @@ const page = () => {
     result = await result.json();
     setLoading(false);
     if (result.success === false) {
-      toast.error(result.message);
+      router.push('/login')
+      toast.error(result.message)
     } else {
       setDetail(result.detail);
       setSelectedImage(result.detail.accountant.profilePic)
@@ -52,6 +55,9 @@ const page = () => {
       result=await result.json()
       setLoading(false)
       if(result.success===false){
+        if(result.message==='Account not found'){
+          router.push('/login')
+        }
         toast.error(result.message)
       }
       else{
@@ -60,7 +66,7 @@ const page = () => {
   }
 
   return (
-    <div className="w-[100%] flex justify-center items-center">
+    <div className="w-[100%] flex justify-center items-center min-h-[700px]">
       {loading ? (
         <CircularProgress />
       ) : (

@@ -80,3 +80,27 @@ export async function POST(req,{params}){
         },{status:500})
     }
 }
+
+export async function DELETE(req,{params}){
+try {
+    const {id}=params
+    await prisma.store.delete({
+        where:{
+            id:id
+        }
+    })
+    return NextResponse.json({
+        success:true,
+        message:'Successfully deleted'
+    },{
+        status:200
+    })
+} catch (error) {
+    return NextResponse.json({
+        success:false,
+        message:'Internal Error'
+    },{
+        status:500
+    })
+}
+}

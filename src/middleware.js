@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server'
 import { jwtVerify } from 'jose'
-
+// import prismaMiddleware from '@/helper/middlewarePrisma';
 
 export async function middleware(request,next) {    
 const authToken=request.cookies.get('authToken')?.value
@@ -10,6 +10,11 @@ if(authToken&&role){
   if(request.nextUrl.pathname==='/login'|| request.nextUrl.pathname==='/register'){
     try {
       const {payload} = await jwtVerify(authToken, getJwtSecretKey());
+      // const user=await prismaMiddleware.user.findUnique({
+      //   where:{
+      //     id:payload.id
+      //   }
+      // })
       if(payload.role==='Admin'){
         return NextResponse.redirect(new URL("/admin/dashboard",request.url))
       }
@@ -23,6 +28,7 @@ if(authToken&&role){
         return NextResponse.redirect(new URL("/accountant/dashboard",request.url))
       }
     } catch (error) {
+      console.log(error)
       console.log("error in token verification")
     }
   }
@@ -37,7 +43,32 @@ if(protectedRoute1){
           if(!authToken){
             return NextResponse.redirect(new URL("/login",request.url))
           }
-            const {payload} = await jwtVerify(authToken, getJwtSecretKey());
+          const {payload} = await jwtVerify(authToken, getJwtSecretKey());
+          if(request.nextUrl.pathname.startsWith('/admin/')){
+            // const user=await prisma.user.findUnique({
+            //   where:{
+            //     id:payload.id
+            //   }
+            // }) 
+            // console.log("here")
+            // console.log(user)
+          }
+            // if(!user){
+            //   const response=NextResponse.redirect(new URL("/login",request.url))
+            //   response.cookies.set("authToken","",{
+            //     httpOnly:true,
+            //     secure:true,
+            //     sameSite:'strict',
+            //     expires:new Date(0)
+            //   })
+            //   response.cookies.set("role","",{
+            //     httpOnly:true,
+            //     secure:true,
+            //     sameSite:'strict',
+            //     expires:new Date(0)
+            //   })
+            //   return response
+            // }
            if(payload.role!=='Admin'){
             return NextResponse.redirect(new URL("/login",request.url))
            }
@@ -52,7 +83,29 @@ if(protectedRoute1){
               return NextResponse.redirect(new URL("/login",request.url))
             }
               const {payload} = await jwtVerify(authToken, getJwtSecretKey());
+        
               if(request.nextUrl.pathname.startsWith('/front-desk/')){
+                // const user=await prisma.user.findUnique({
+                //   where:{
+                //     id:payload.id
+                //   }
+                // }) 
+                // if(!user){
+                //   const response=NextResponse.redirect(new URL("/login",request.url))
+                //   response.cookies.set("authToken","",{
+                //     httpOnly:true,
+                //     secure:true,
+                //     sameSite:'strict',
+                //     expires:new Date(0)
+                //   })
+                //   response.cookies.set("role","",{
+                //     httpOnly:true,
+                //     secure:true,
+                //     sameSite:'strict',
+                //     expires:new Date(0)
+                //   })
+                //   return response
+                // }
                 if(payload.role!=='FrontDesk'){
                  return NextResponse.redirect(new URL("/login",request.url))
                 }
@@ -71,7 +124,29 @@ if(protectedRoute1){
                 return NextResponse.redirect(new URL("/login",request.url))
               }
                 const {payload} = await jwtVerify(authToken, getJwtSecretKey());
+          
                 if(request.nextUrl.pathname.startsWith('/accountant/')){
+                  // const user=await prisma.user.findUnique({
+                  //   where:{
+                  //     id:payload.id
+                  //   }
+                  // }) 
+                  // if(!user){
+                  //   const response=NextResponse.redirect(new URL("/login",request.url))
+                  //   response.cookies.set("authToken","",{
+                  //     httpOnly:true,
+                  //     secure:true,
+                  //     sameSite:'strict',
+                  //     expires:new Date(0)
+                  //   })
+                  //   response.cookies.set("role","",{
+                  //     httpOnly:true,
+                  //     secure:true,
+                  //     sameSite:'strict',
+                  //     expires:new Date(0)
+                  //   })
+                  //   return response
+                  // }
                   if(payload.role!=='Accounting'){
                    return NextResponse.redirect(new URL("/login",request.url))
                   }
@@ -90,7 +165,29 @@ if(protectedRoute1){
                   return NextResponse.redirect(new URL("/login",request.url))
                 }
                   const {payload} = await jwtVerify(authToken, getJwtSecretKey());
+            
                   if(request.nextUrl.pathname.startsWith('/teacher/')){
+                    // const user=await prisma.user.findUnique({
+                    //   where:{
+                    //     id:payload.id
+                    //   }
+                    // }) 
+                    // if(!user){
+                    //   const response=NextResponse.redirect(new URL("/login",request.url))
+                    //   response.cookies.set("authToken","",{
+                    //     httpOnly:true,
+                    //     secure:true,
+                    //     sameSite:'strict',
+                    //     expires:new Date(0)
+                    //   })
+                    //   response.cookies.set("role","",{
+                    //     httpOnly:true,
+                    //     secure:true,
+                    //     sameSite:'strict',
+                    //     expires:new Date(0)
+                    //   })
+                    //   return response
+                    // }
                     if(payload.role!=='Teacher'){
                      return NextResponse.redirect(new URL("/login",request.url))
                     }

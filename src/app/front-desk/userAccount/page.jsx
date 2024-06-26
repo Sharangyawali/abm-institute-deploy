@@ -4,8 +4,10 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { RiPencilFill } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router=useRouter()
   const [detail, setDetail] = useState();
   const [loading, setLoading] = useState(true);
   const [streetAddress, setStreetAddress] = useState("");
@@ -27,6 +29,7 @@ const page = () => {
     result = await result.json();
     setLoading(false);
     if (result.success === false) {
+      router.push('/login')
       toast.error(result.message);
     } else {
       setDetail(result.detail);
@@ -53,6 +56,9 @@ const page = () => {
     result = await result.json();
     setLoading(false);
     if (result.success === false) {
+      if(result.message==='Account not found'){
+        router.push('/login')
+      }
       toast.error(result.message);
     } else {
       toast.success(result.message);
@@ -60,7 +66,7 @@ const page = () => {
   };
 
   return (
-    <div className="w-[100%] flex justify-center items-center">
+    <div className="w-[100%] flex justify-center items-center min-h-[700px]">
       {loading ? (
         <CircularProgress />
       ) : (

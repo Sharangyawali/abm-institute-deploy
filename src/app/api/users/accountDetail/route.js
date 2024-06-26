@@ -20,12 +20,35 @@ export async function GET(){
                 frontDesk:true
             }
         })
-        console.log(user)
-        return NextResponse.json({
-            success:true,
-            message:"Successfully obtained details",
-            detail:user
-        },{status:200})
+        if(user){
+            console.log(user)
+            return NextResponse.json({
+                success:true,
+                message:"Successfully obtained details",
+                detail:user
+            },{status:200})
+        }
+        else{
+            const response=NextResponse.json({
+                success:false,
+                message:'Unauthorized Access'
+            },{
+                status:403
+            })
+            response.cookies.set("authToken","",{
+                httpOnly:true,
+                secure:true,
+                sameSite:'strict',
+                expires:new Date(0)
+              })
+              response.cookies.set("role","",{
+                httpOnly:true,
+                secure:true,
+                sameSite:'strict',
+                expires:new Date(0)
+              })
+              return response
+        }
     } catch (error) {
         console.log(error)
         return NextResponse.json({
@@ -57,48 +80,69 @@ export async function POST(req){
                 await writeFile(path,buffer)
                 update.profilePic=`/${file.name}`
             }
-            if(data.role==='Teacher'){
-                await prisma.user.update({
-                    where:{
-                        id:data.id
-                    },
-                    data:{
-                        teacher:{
-                       update
+            try {
+                if(data.role==='Teacher'){
+                    await prisma.user.update({
+                        where:{
+                            id:data.id
+                        },
+                        data:{
+                            teacher:{
+                           update
+                            }
                         }
-                    }
-                })
-            }
-            else if(data.role==='FrontDesk'){
-                await prisma.user.update({
-                    where:{
-                        id:data.id
-                    },
-                    data:{
-                        frontDesk:{
-                        update
+                    })
+                }
+                else if(data.role==='FrontDesk'){
+                    await prisma.user.update({
+                        where:{
+                            id:data.id
+                        },
+                        data:{
+                            frontDesk:{
+                            update
+                            }
                         }
-                    }
-                })
-            }
-           else if(data.role==='Accounting'){
-                await prisma.user.update({
-                    where:{
-                        id:data.id
-                    },
-                    data:{
-                        accountant:{
-                        update
+                    })
+                }
+               else if(data.role==='Accounting'){
+                    await prisma.user.update({
+                        where:{
+                            id:data.id
+                        },
+                        data:{
+                            accountant:{
+                            update
+                            }
                         }
-                    }
+                    })
+                }
+                return NextResponse.json({
+                    success:true,
+                    message:"Successfully updated"
+                },{
+                    status:200
                 })
+                
+            } catch (error) {
+                const response= NextResponse.json({
+                    success:false,
+                    message:'Account not found'
+                },{status:404})
+                response.cookies.set("authToken","",{
+                    httpOnly:true,
+                    secure:true,
+                    sameSite:'strict',
+                    expires:new Date(0)
+                  })
+                  response.cookies.set("role","",{
+                    httpOnly:true,
+                    secure:true,
+                    sameSite:'strict',
+                    expires:new Date(0)
+                  })
+                  return response
             }
-            return NextResponse.json({
-                success:true,
-                message:"Successfully updated"
-            },{
-                status:200
-            })
         }
         else{
             return NextResponse.json({
