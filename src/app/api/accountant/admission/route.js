@@ -4,7 +4,7 @@ export const dynamic='force-dynamic'
 export async function POST(req){
     try {
         const {firstName,lastName,streetAddress,city,state,zipCode,phone,email,selectedClasses,fee,gender}=await req.json()
-        if(firstName===''||lastName===''||streetAddress===''||city===''||state===''||zipCode===''||phone===''||email===''||fee===''||!gender||gender===''){
+        if(firstName===''||lastName===''||streetAddress===''||city===''||state===''||zipCode===''||phone===''||email===''||!fee||!gender||gender===''){
             return NextResponse.json({
                 success:false,
                 message:'Insufficient Information'

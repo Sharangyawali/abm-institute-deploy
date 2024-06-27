@@ -144,7 +144,7 @@ model Students {
   phone         String         @unique
   email         String         @unique
   gender        Gender?
-  agreedFee     String?
+  agreedFee     Float?
   classes       ClassStudent[]
   payments      FeePayments[]
   createdAt     DateTime       @default(now())

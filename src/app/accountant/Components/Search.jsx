@@ -33,6 +33,7 @@ const Search = () => {
       const studentRecord=result.students.map((stud,index)=>({
         ...stud,role:'Student'
       }))
+      console.log("students are",result.students)
       setEmployee((prev) => [...prev, ...studentRecord]);
       visitors()
     }
@@ -70,7 +71,7 @@ if(val.length>0){
         showingAre.push ({name:name,role:'Visitors',detail:emp})
       }
     }
-    else if(emp.firstName && emp.lastName&&emp.role==='Visitors'){
+    else if(emp.firstName && emp.lastName&&emp.role==='Student'){
       const name=`${emp.firstName} ${emp.lastName}`
       const nameToLower=name.toLowerCase()
       if(value && nameToLower.includes(value)){

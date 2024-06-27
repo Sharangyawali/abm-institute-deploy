@@ -19,7 +19,7 @@ const page = () => {
   const [email,setEmail]=useState('')
   const[classes,setClasses]=useState([])
   const[selectedClasses,setSelectedClasses]=useState([])
-  const[fee,setFee]=useState('')
+  const[fee,setFee]=useState()
   const [error,setError]=useState(false)
   const rgexp = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
@@ -52,7 +52,7 @@ const page = () => {
   const addStudent=async()=>{
     console.log("classes are",selectedClasses)
 
-    if(gender===''||firstName===''||lastName===''||streetAddress===''||city===''||state===''||zipCode===''||phone===''||!rgexp.test(email)||fee===''){
+    if(gender===''||firstName===''||lastName===''||streetAddress===''||city===''||state===''||zipCode===''||phone===''||!rgexp.test(email)||!fee){
       setError(true)
     }
     else{
@@ -216,7 +216,7 @@ const page = () => {
               <input
                 value={fee}
                 onChange={(e)=>setFee(e.target.value)}
-                type="text"
+                type="number"
                 placeholder="ex: 12,000"
                 className="w-[100%] h-[45px] bg-[white] outline-none px-[10px] rounded-md border-[#d3d3d3] border-[2px]"
               />

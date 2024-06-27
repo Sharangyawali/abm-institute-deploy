@@ -35,7 +35,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className=" w-[50%] flex flex-col tablet:flex-row  tablet:justify-end laptop:justify-between gap-[10px] mr-[30px] tablet:mr-0 tablet:gap-[20px] pl-[10px]">
+      <div className=" w-[50%] flex flex-col laptop:flex-row   laptop:justify-between gap-[10px] mr-[30px] laptop:mr-0 laptop:gap-[20px] pl-[10px]">
         <Search/>
         <div className="h-[40px]  flex  flex-row gap-[30px] laptop:gap-0 justify-end mt-[2px] tablet:mt-[9px]">
           <Link href='/front-desk/userAccount'>

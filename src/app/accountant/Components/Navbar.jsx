@@ -26,7 +26,7 @@ const Navbar = () => {
             ABM-INSTITUTE
           </div>
           {/* content topics */}
-          <div className="h-[40px] laptop:w-[45%] flex laptop:gap-[10px] laptop:ml-[40px] items-center laptop:justify-evenly  text-[#777777] laptop:text-black font-normal">
+          <div className="h-[40px] laptop:w-[60%] flex laptop:gap-[10px] laptop:ml-[40px] items-center laptop:justify-evenly  text-[#777777] laptop:text-black font-normal">
             <div className="stationery flex mr-[15px] laptop:mr-0 hover:text-secondary-color font-semibold dark:hover:text-primary-color items-center cursor-pointer">
               <Link href="/accountant/dashboard"> Dashboard</Link>
             </div>
@@ -38,10 +38,18 @@ const Navbar = () => {
             <div className="books  flex mr-[15px] laptop:mr-0 hover:text-secondary-color font-semibold dark:hover:text-primary-color items-center cursor-pointer">
               <Link href="/accountant/admission"> Addmission</Link>
             </div>
+            <div className="books  flex mr-[15px] laptop:mr-0 hover:text-secondary-color font-semibold dark:hover:text-primary-color items-center cursor-pointer">
+              <Link href="/accountant/store/allProducts"> Store</Link>
+            </div>
+            <div className="books  flex mr-[15px] laptop:mr-0 hover:text-secondary-color font-semibold dark:hover:text-primary-color items-center cursor-pointer">
+              <Link href="/accountant/student"> Students</Link>
+            </div>
           </div>
         </div>
-        <div className=" w-[50%] flex flex-col tablet:flex-row  tablet:justify-end gap-[10px] laptop:justify-between mr-[30px] tablet:mr-0 tablet:gap-[20px] pl-[10px]">
+        <div className=" w-[35%] flex flex-col laptop:flex-row   gap-[10px] laptop:justify-between mr-[30px] laptop:mr-0 laptop:gap-[20px] pl-[10px]">
           <Search />
+          <div className="flex justify-end">
+
           <div className="h-[40px]  flex  flex-row gap-[30px] laptop:gap-0 justify-end mt-[2px] tablet:mt-[9px]">
             <Link href={`/accountant/userAccount`}>
             <FaRegUser size={27} className="cursor-pointer " />
@@ -50,6 +58,9 @@ const Navbar = () => {
           <div className="h-[40px]  flex  flex-row gap-[30px] laptop:gap-0 justify-end mt-[2px] tablet:mt-[9px]">
           <IoLogOut size={30} className="cursor-pointer " onClick={handleLogout}/>
         </div>
+
+            </div>
+
         </div>
       </div>
     </div>

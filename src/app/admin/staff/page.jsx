@@ -220,10 +220,10 @@ const Page = () => {
                           }}
                         >
                           {acc.streetAddress !== null
-                            ? `${acc.streetAddress},`
+                            ? `${acc.streetAddress}`
                             : ""}
-                          {acc.state !== null ? `${acc.state},` : ""}
-                          {acc.city !== null ? `${acc.city}` : ""}
+                          {/* {acc.state !== null ? `${acc.state},` : ""}
+                          {acc.city !== null ? `${acc.city}` : ""} */}
                         </td>
                         <td
                           className="flex items-center justify-center px-4 py-2 w-[12%]"
@@ -309,10 +309,10 @@ const Page = () => {
                           }}
                         >
                           {acc.streetAddress !== null
-                            ? `${acc.streetAddress},`
+                            ? `${acc.streetAddress}`
                             : ""}
-                          {acc.state !== null ? `${acc.state},` : ""}
-                          {acc.city !== null ? `${acc.city}` : ""}
+                          {/* {acc.state !== null ? `${acc.state},` : ""}
+                          {acc.city !== null ? `${acc.city}` : ""} */}
                         </td>
                         <td
                           className="flex items-center justify-center px-4 py-2 w-[12%]"
@@ -398,10 +398,10 @@ const Page = () => {
                           }}
                         >
                           {acc.streetAddress !== null
-                            ? `${acc.streetAddress},`
+                            ? `${acc.streetAddress}`
                             : ""}
-                          {acc.state !== null ? `${acc.state},` : ""}
-                          {acc.city !== null ? `${acc.city}` : ""}
+                          {/* {acc.state !== null ? `${acc.state},` : ""}
+                          {acc.city !== null ? `${acc.city}` : ""} */}
                         </td>
                         <td
                           className="flex items-center justify-center px-4 py-2 w-[12%]"
