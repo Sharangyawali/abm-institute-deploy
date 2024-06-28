@@ -20,6 +20,8 @@ const TopBar = () => {
   const[endTime,setEndTime]=useState('')
   const[teacher,setTeacher]=useState('')
   const[teachers,setTeachers]=useState([])
+  const [startDate,setStartDate]=useState()
+  const [endDate,setEndDate]=useState()
   const handleToogle=()=>{
     setShowModal(true)
   }
@@ -46,14 +48,14 @@ const getTeachers=async()=>{
 
 
 const addClass=async()=>{
-  if(subject===''||startTime===''||endTime===''||teacher===''){
+  if(subject===''||startTime===''||endTime===''||teacher===''||!startDate||startDate===''||!endDate||endDate===''){
     setError(true)
   }
   else{
     dispatch(setLoadingTrue())
     let result = await fetch(`/api/admin/class`, {
       method: "post",
-      body: JSON.stringify({subject,startTime,endTime,teacher:teacher}),
+      body: JSON.stringify({subject,startTime,endTime,teacher:teacher,endDate,startDate}),
       headers: { "Content-Type": "application/json" },
     });
     result = await result.json();
@@ -117,7 +119,7 @@ const addClass=async()=>{
               <label className="flex my-[3px] font-medium ">Ending time
             {error&&(endTime==='')?
             <div className="text-[red] font-bold text-[10px] ml-[5px] mt-[3px]">*Please provide ending time</div>
-          :''  
+            :''  
           }
             </label>
             <div className="flex w-[100%] flex-col gap-[5px]">
@@ -125,6 +127,34 @@ const addClass=async()=>{
                   type="time"
                   value={endTime}
                   onChange={(e)=>setEndTime(e.target.value)}
+                  className="w-[100%] h-[45px] bg-[white] outline-none px-[10px] rounded-md border-[#d3d3d3] border-[2px]"
+                />
+              </div>
+              <label className="flex my-[3px] font-medium ">Start date
+            {error&&(!startDate||startDate==='')?
+            <div className="text-[red] font-bold text-[10px] ml-[5px] mt-[3px]">*Please provide start date</div>
+            :''  
+          }
+            </label>
+            <div className="flex w-[100%] flex-col gap-[5px]">
+                <input
+                value={startDate}
+                onChange={(e)=>setStartDate(e.target.value)}
+                  type="date"
+                  className="w-[100%] h-[45px] bg-[white] outline-none px-[10px] rounded-md border-[#d3d3d3] border-[2px]"
+                />
+              </div>
+              <label className="flex my-[3px] font-medium ">Ending date
+            {error&&(!endDate||endDate==='')?
+            <div className="text-[red] font-bold text-[10px] ml-[5px] mt-[3px]">*Please provide ending date</div>
+            :''  
+          }
+            </label>
+            <div className="flex w-[100%] flex-col gap-[5px]">
+                <input
+                value={endDate}
+                onChange={(e)=>setEndDate(e.target.value)}
+                  type="date"
                   className="w-[100%] h-[45px] bg-[white] outline-none px-[10px] rounded-md border-[#d3d3d3] border-[2px]"
                 />
               </div>
@@ -136,7 +166,7 @@ const addClass=async()=>{
             </label>
             <select value={teacher} className='mt-1 border p-2 w-full rounded-md text-black' name='category' onChange={(e)=>setTeacher(e.target.value)}>
                   <option value={""}>
-                    Select Category
+                    Select Teacher
                   </option>
                   {
                     teachers.length>0&&teachers.map((el, index) => {

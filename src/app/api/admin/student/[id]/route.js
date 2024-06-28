@@ -13,7 +13,8 @@ export async function GET(req,{params}){
                     include:{
                         class:true
                     }
-                }
+                },
+                payments:true
             }
         })
         if(student){

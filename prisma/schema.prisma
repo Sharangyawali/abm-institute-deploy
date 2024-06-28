@@ -125,6 +125,8 @@ model Classes {
   id         String         @id @default(cuid())
   className  String
   startTime  String
+  startDate  String?
+  endDate    String?
   endTime    String
   teacher    Teachers       @relation(fields: [teachersId], references: [id],onDelete: Cascade)
   teachersId String

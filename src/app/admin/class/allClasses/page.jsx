@@ -49,8 +49,15 @@ const page = () => {
              <div className='font-sans text-[20px] font-bold text-[#494949]'>
                {classes._count.students} Students
                </div>
-               <div className='font-mono text-[16px] font-medium'>
+               <div className='font-mono text-[16px] flex flex-col font-medium'>
+                <span>
                  {classes.startTime} to {classes.endTime} 
+                </span>
+                <span>
+                  {(classes.startDate&&classes.endDate)?`${classes.startDate} to ${classes.endDate}`
+                  :'' 
+                }
+                </span>
                </div>
            </div>
        </Link>

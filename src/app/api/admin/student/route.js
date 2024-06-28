@@ -3,7 +3,16 @@ import prisma from "@/helper/db";
 export const dynamic = "force-dynamic";
 export async function GET(req){
 try {
-    const students=await prisma.students.findMany({})
+    const students=await prisma.students.findMany({
+        include:{
+            classes:{
+                include:{
+                    class:true
+                }
+            },
+            payments:true
+        }
+    })
     return NextResponse.json({
         success:true,
         message:"Successfully obtained students",

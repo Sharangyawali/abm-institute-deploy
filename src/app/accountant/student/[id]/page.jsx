@@ -4,6 +4,11 @@ import Multiselect from "multiselect-react-dropdown";
 import Link from "next/link";
 import React,{useState,useEffect} from "react";
 import toast from "react-hot-toast";
+import { CircularProgress } from "@mui/joy";
+import Multiselect from "multiselect-react-dropdown";
+import Link from "next/link";
+import React,{useState,useEffect} from "react";
+import toast from "react-hot-toast";
 
 const page = ({ params }) => {
     const [loading,setLoading]=useState(true)
@@ -20,14 +25,7 @@ const page = ({ params }) => {
         getDetail()
     },[])
 
-    // useEffect(()=>{
-    // const finalClasses=allClasses.map((clss,index)=>{
-    //     if(selectedClasses.includes(clss.id)===false){
-    //       return clss
-    //     }
-    //   })
-    //   setClasses(finalClasses)
-    // },[allClasses])
+
 
     const getClasses=async()=>{
       let result = await fetch(`/api/accountant/classes`, {
@@ -102,6 +100,34 @@ const page = ({ params }) => {
     }
     }
     
+
+    }
+
+    const handleSelect = (selectedList) => {
+      setSelectedClasses(selectedList.map(item => item.id));
+    };
+  
+    const handleRemove = (selectedList) => {
+      setSelectedClasses(selectedList.map(item => item.id));
+    };
+    console.log("selected classes are",selectedClasses)
+
+    const handleSubmit=async()=>{
+      setLoading(true)
+      let result=await fetch(`/api/accountant/studentDetails/${params.id}`,{
+        method:'post',
+        body:JSON.stringify({streetAddress,city,state,fee,selectedClasses})
+    })
+    result=await result.json()
+    setLoading(false)
+    if(result.success===false){
+        toast.error(result.message)
+    }
+    else{
+      toast.success(result.message)
+    }
+    }
+    
   return (
     <div className="w-[100%] flex justify-center items-center">
     {loading?<CircularProgress/>:
@@ -113,6 +139,7 @@ const page = ({ params }) => {
       </div>
       <span>{detail.firstName} {detail.lastName}</span>
       <span>Student</span>
+      <span>{(new Date(detail.createdAt)).toLocaleString()}</span>
     </div>
     <div className="w-[100%] laptop:w-[59%] flex flex-col h-[800px] shadow-xl rounded-md justify-evenly px-[10px] ">
       <div className="w-[100%] text-[18px] font-semibold text-[#3f3f3f]">
@@ -124,7 +151,7 @@ const page = ({ params }) => {
           <span className="font-semibold text-[18px]">Email</span>
           <span className=" text-[16px]">{detail.email}</span>
         </div>
-        <div className="flex flex-col w-[50%] tablet:h-[80px] justify-between">
+        <div className="flex flex-col w-[50%] tablet:h-[60px] justify-between">
           <span className="font-semibold text-[18px]">Phone</span>
           <span className=" text-[16px]">{detail.phone}</span>
         </div>
@@ -222,6 +249,6 @@ const page = ({ params }) => {
     }
 </div>
   );
-};
+
 
 export default page;

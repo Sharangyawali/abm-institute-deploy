@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 export const dynamic="force-dynamic"
 export async function POST(req){
 try {
-    const{subject,startTime,endTime,teacher}=await req.json()
-    if(!subject||!startTime||!endTime||!teacher||startTime==='',endTime===''||teacher===''){
+    const{subject,startTime,endTime,teacher,startDate,endDate}=await req.json()
+    if(!subject||!startTime||!endTime||!teacher||startTime===''||endTime===''||teacher===''||!startDate||startDate===''||!endDate||endDate===''){
         return  NextResponse.json({
             success:false,
             message:"Insufficient information"
@@ -18,6 +18,8 @@ try {
             startTime:startTime,
             endTime:endTime,
             teachersId:teacher,
+            startDate:startDate,
+            endDate:endDate
         }
     })
     return NextResponse.json({

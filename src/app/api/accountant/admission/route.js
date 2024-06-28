@@ -12,7 +12,7 @@ export async function POST(req){
                 status:301
             })
         }
-        const data={firstName,lastName,streetAddress,city,state,zipCode,phone,email,gender,agreedFee:fee}
+        const data={firstName,lastName,streetAddress,city,state,zipCode,phone,email,gender,agreedFee:parseFloat(fee)}
         const student=await prisma.Students.create({
             data:data
         })

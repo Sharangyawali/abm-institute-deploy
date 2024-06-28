@@ -52,7 +52,7 @@ const page = () => {
   const addStudent=async()=>{
     console.log("classes are",selectedClasses)
 
-    if(gender===''||firstName===''||lastName===''||streetAddress===''||city===''||state===''||zipCode===''||phone===''||!rgexp.test(email)||!fee){
+    if(gender===''||firstName===''||lastName===''||streetAddress===''||city===''||state===''||zipCode===''||phone===''||!rgexp.test(email)||!fee||isNaN(fee)){
       setError(true)
     }
     else{
@@ -208,7 +208,7 @@ const page = () => {
         <div className="flex w-[100%] tablet:w-[46%] flex-col gap-[5px]">
               <label className="flex my-[3px] font-medium">Total Fee
               {error&&fee===''?
-              <div className="text-[red] font-bold text-[10px] ml-[5px] mt-[3px]">*Please provide total fee</div>
+              <div className="text-[red] font-bold text-[10px] ml-[5px] mt-[3px]">*Please provide total fee in numeric form</div>
               :''
             }
               
@@ -217,7 +217,7 @@ const page = () => {
                 value={fee}
                 onChange={(e)=>setFee(e.target.value)}
                 type="number"
-                placeholder="ex: 12,000"
+                placeholder="ex: 12000"
                 className="w-[100%] h-[45px] bg-[white] outline-none px-[10px] rounded-md border-[#d3d3d3] border-[2px]"
               />
             </div>
@@ -262,7 +262,7 @@ const page = () => {
           <div className="flex w-[100%]  flex-col justify-evenly">
             <label className="block my-[3px] font-medium">Classes</label>
             <div className="flex gap-[3px] w-[100%] ">
-             <Multiselect  className='w-full'  displayValue='displayLabel' options={classes} selectedValues={classes.filter(cls => selectedClasses.includes(cls.id))} onRemove={handleRemove}  onSelect={handleSelect}/>
+             <Multiselect placeholder=""  className='w-full'  displayValue='displayLabel' options={classes} selectedValues={classes.filter(cls => selectedClasses.includes(cls.id))} onRemove={handleRemove}  onSelect={handleSelect}/>
             </div>
           </div>
         </div>
