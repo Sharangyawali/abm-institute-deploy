@@ -17,6 +17,7 @@ import { MdOutlinePayment } from "react-icons/md";
 import { PiStudentFill } from "react-icons/pi";
 import { IoIosPersonAdd } from "react-icons/io";
 import { FaStore } from "react-icons/fa";
+import { MdPassword } from "react-icons/md";
 const Sidebar = ({show}) => {
   const pathName = usePathname()
   return (
@@ -96,13 +97,13 @@ const Sidebar = ({show}) => {
               </Link>
           </div>
       </div>
-      {/* <Link href='/account' className="flex items-center justify-center w-full h-16 mt-auto bg-gray-200 hover:text-[#272727] hover:bg-gray-300">
-  <IoIosPersonAdd className='w-[25px] h-[25px]' color='black'/>
+      <Link href='/account' className="flex items-center justify-center w-full h-16 mt-auto bg-gray-200 hover:text-[#272727] hover:bg-gray-300">
+  <MdPassword className='w-[25px] h-[25px]' color='black'/>
     {show===true?
-    (<span className="ml-2 text-sm font-medium">Account</span>):
+    (<span className="ml-2 text-sm font-medium">New Password</span>):
     ''
   }
-      </Link> */}
+      </Link>
   </div>
   </div>
   )

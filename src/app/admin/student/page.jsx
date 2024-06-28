@@ -74,7 +74,7 @@ const Page = () => {
                     key={index}
                     style={{ minHeight: "40px" }}
                     onClick={() => {
-                      router.push(`/accountant/student/${acc.id}`);
+                      router.push(`/admin/student/${acc.id}`);
                     }}
                   >
                     <td className="flex justify-center items-center px-4 py-2 w-[15%] ">
