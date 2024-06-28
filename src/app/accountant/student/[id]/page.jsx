@@ -4,11 +4,6 @@ import Multiselect from "multiselect-react-dropdown";
 import Link from "next/link";
 import React,{useState,useEffect} from "react";
 import toast from "react-hot-toast";
-import { CircularProgress } from "@mui/joy";
-import Multiselect from "multiselect-react-dropdown";
-import Link from "next/link";
-import React,{useState,useEffect} from "react";
-import toast from "react-hot-toast";
 
 const page = ({ params }) => {
     const [loading,setLoading]=useState(true)
@@ -75,33 +70,7 @@ const page = ({ params }) => {
 
     }
 
-    const handleSelect = (selectedList) => {
-      setSelectedClasses(selectedList.map(item => item.id));
-    };
-  
-    const handleRemove = (selectedList) => {
-      setSelectedClasses(selectedList.map(item => item.id));
-    };
-    console.log("selected classes are",selectedClasses)
-
-    const handleSubmit=async()=>{
-      setLoading(true)
-      let result=await fetch(`/api/accountant/studentDetails/${params.id}`,{
-        method:'post',
-        body:JSON.stringify({streetAddress,city,state,fee,selectedClasses})
-    })
-    result=await result.json()
-    setLoading(false)
-    if(result.success===false){
-        toast.error(result.message)
-    }
-    else{
-      toast.success(result.message)
-    }
-    }
     
-
-    }
 
     const handleSelect = (selectedList) => {
       setSelectedClasses(selectedList.map(item => item.id));
@@ -249,6 +218,6 @@ const page = ({ params }) => {
     }
 </div>
   );
-
+}
 
 export default page;

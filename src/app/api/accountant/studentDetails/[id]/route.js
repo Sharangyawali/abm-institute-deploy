@@ -53,11 +53,7 @@ export async function POST(req,{params}){
                 id:id
             },
             data:{
-<<<<<<< HEAD
-                streetAddress,city,state,agreedFee:fee
-=======
                 streetAddress,city,state,agreedFee:parseFloat(fee)
->>>>>>> 39a21e2 (28th june commited)
             }
         })
         if(selectedClasses!==null && selectedClasses.length>0){
@@ -86,10 +82,6 @@ export async function POST(req,{params}){
             status:200
         })
     } catch (error) {
-<<<<<<< HEAD
-=======
-        console.log(error);
->>>>>>> 39a21e2 (28th june commited)
         return NextResponse.json({
             success:false,
             message:'Internal Error'
