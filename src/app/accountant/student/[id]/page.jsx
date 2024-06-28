@@ -15,6 +15,8 @@ const page = ({ params }) => {
     const[detail,setDetail]=useState({})
     const [paid,setPaid]=useState()
     const[classes,setClasses]=useState([])
+    const [active,setActive]=useState()
+
     useEffect(()=>{
       getClasses()
         getDetail()
@@ -54,7 +56,9 @@ const page = ({ params }) => {
             setStreetAddress(result.student.streetAddress)
             setCity(result.student.city)
             setState(result.student.state)
-            setFee(parseInt(result.student.agreedFee))
+            setFee(parseFloat(result.student.agreedFee))
+          setActive(result.student.active)
+
             let classIds=[]
             result.student.classes.forEach((clss,index)=>{
               classIds.push(clss.class.id)
@@ -109,6 +113,16 @@ const page = ({ params }) => {
       <span>{detail.firstName} {detail.lastName}</span>
       <span>Student</span>
       <span>{(new Date(detail.createdAt)).toLocaleString()}</span>
+      <span>Joined On:{(new Date(detail.createdAt)).toLocaleString(undefined,{
+  year: 'numeric',   // Full numeric representation of the year (e.g., 2024)
+  month: 'long',     // Full month name (e.g., January)
+  day: 'numeric',    // Numeric day of the month (e.g., 1, 2, 31)
+  // weekday: 'long'    // Full weekday name (e.g., Monday)
+})}</span>
+{active?
+<div className="w-[180px] h-[60px] bg-[green] flex justify-center items-center rounded-md cursor-pointer" onClick={()=>setActive(false)}>Mark as Unactive</div>
+:<div className="w-[180px] h-[60px] bg-[red] flex justify-center items-center rounded-md cursor-pointer" onClick={()=>setActive(true)}>Mark as Active</div>
+}
     </div>
     <div className="w-[100%] laptop:w-[59%] flex flex-col h-[800px] shadow-xl rounded-md justify-evenly px-[10px] ">
       <div className="w-[100%] text-[18px] font-semibold text-[#3f3f3f]">
@@ -207,6 +221,13 @@ const page = ({ params }) => {
             </div>
       <div className="flex w-[100%] justify-start">
       <Link href={`/accountant/student/feePayment/${detail.id}`} className="w-[150px] my-[15px] h-[30px] flex items-center justify-center bg-[#a25dda] font-semibold text-white float-end rounded-lg cursor-pointer">View FeePayment</Link>
+      </div>
+      <div className="w-[100%] text-[18px] font-semibold text-[#3f3f3f]">
+        Attendance
+        <hr></hr>
+      </div>
+      <div className="flex w-[100%] justify-start">
+      <Link href={`/accountant/student/attendance/${detail.id}`} className="w-[150px] my-[15px] h-[30px] flex items-center justify-center bg-[#a25dda] font-semibold text-white float-end rounded-lg cursor-pointer">View Attendance</Link>
       </div>
       <div className="w-[100%] flex justify-center  text-[18px] font-semibold ">
               <div className="text-white bg-[#a25dda] flex justify-center items-center w-[120px] h-[40px] rounded-md cursor-pointer hover:bg-[#a540a5]" onClick={handleSubmit}>

@@ -41,28 +41,31 @@ const Page = () => {
           </div>
         </div>
         <div className="w-[100%] h-[650px]  laptop:px-[10px] overflow-x-scroll scrollbar-thin  scrollbar-thumb-[#420177]">
-          <table className="w-[100%] text-sm text-gray-500 ">
+        <table className="w-[100%] text-sm text-gray-500 ">
             <thead className="text-xs text-gray-700 uppercase bg-[#f3f3f3]">
               <tr className="flex w-full">
-                <th className=" flex justify-center items-center px-4 py-2 w-[15%]">
+                <th className=" flex justify-center items-center px-4 py-2 w-[12%]">
                   SN
                 </th>
-                <th className="flex justify-center items-center px-4 py-2 w-[15%]">
+                <th className="flex justify-center items-center px-4 py-2 w-[12%]">
                   Name
                 </th>
-                <th className="flex justify-center items-center px-4 py-2 w-[15%]">
+                <th className="flex justify-center items-center px-4 py-2 w-[12%]">
                   Phone
                 </th>
-                <th className="flex justify-center items-center px-4 py-2 w-[15%]">
+                <th className="flex justify-center items-center px-4 py-2 w-[12%]">
                   Address
                 </th>
-                <th className="flex justify-center items-center px-4 py-2 w-[15%]">
+                <th className="flex justify-center items-center px-4 py-2 w-[12%]">
                   Email
                 </th>
-                <th className="flex justify-center items-center px-4 py-2 w-[15%]">
+                <th className="flex justify-center items-center px-4 py-2 w-[12%]">
                   Gender
                 </th>
-                <th className="flex justify-center items-center px-4 py-2 w-[10%]">
+                <th className="flex justify-center items-center px-4 py-2 w-[12%]">
+                  Active
+                </th>
+                <th className="flex justify-center items-center px-4 py-2 w-[12%]">
                   Fee
                 </th>
               </tr>
@@ -80,32 +83,38 @@ const Page = () => {
                     key={index}
                     style={{ minHeight: "40px" }}
                     onClick={() => {
-                      router.push(`/accountant/student/${acc.id}`);
+                      router.push(`/admin/student/${acc.id}`);
                     }}
                   >
-                    <td className="flex justify-center items-center px-4 py-2 w-[15%] ">
+                    <td className="flex justify-center items-center px-4 py-2 w-[12%] ">
                       {index + 1}
                     </td>
-                    <td className="flex justify-center items-center px-4 py-2 w-[15%]  ">
+                    <td className="flex justify-center items-center px-4 py-2 w-[12%]  ">
                       {acc.firstName} {acc.lastName}
                     </td>
-                    <td className="flex justify-center items-center px-4 py-2 w-[15%]  ">
+                    <td className="flex justify-center items-center px-4 py-2 w-[12%]  ">
                       {acc.phone}
                     </td>
-                    <td className="flex justify-center items-center px-4 py-2 w-[15%] ">
+                    <td className="flex justify-center items-center px-4 py-2 w-[12%] ">
                       {acc.streetAddress !== null
                         ? `${acc.streetAddress}`
                         : ""}
                       {/* {acc.state !== null ? `${acc.state},` : ""}
                       {acc.city !== null ? `${acc.city}` : ""} */}
                     </td>
-                    <td className="flex justify-center items-center px-4 py-2 w-[15%]  ">
+                    <td className="flex justify-center items-center px-4 py-2 w-[12%]  ">
                       {acc.email}
                     </td>
-                    <td className="flex justify-center items-center px-4 py-2 w-[15%]  ">
+                    <td className="flex justify-center items-center px-4 py-2 w-[12%]  ">
                       {acc.gender}
                     </td>
-                    <td className="flex justify-center items-center px-4 py-2 w-[10%]  ">
+                    <td className="flex justify-center items-center px-4 py-2 w-[12%]  ">
+                      {acc.active?
+                    <div className="w-[80%] min-w-[80px] bg-[green] text-[white] text-[16px] font-semibold flex justify-center items-center px-2 py-2 rounded-md">Active</div>  :
+                    <div className="w-[80%] min-w-[80px] bg-[red] text-[white] text-[16px] font-semibold flex justify-center items-center px-2 py-2 rounded-md">Left</div>
+                    }
+                    </td>
+                    <td className="flex justify-center items-center px-4 py-2 w-[12%]  ">
                         {transactions<agreed?
                         <div className="w-[120px] bg-[red] text-[white] text-[16px] font-semibold flex justify-center items-center px-2 py-2 rounded-md">
                             Remaining

@@ -82,7 +82,7 @@ const page = () => {
   };
   return (
     <div className=" w-[100%] flex flex-col tablet:px-[20px] py-[20px] items-center">
-      {loading?<CircularProgress className="absolute top-[49%] left-[49%]"/>:
+      {loading?<CircularProgress className="absolute top-[49%] "/>:
       
       
     <div className="w-[100%] tablet:w-[80%] laptop:w-[45%]  shadow-2xl rounded-xl flex flex-col gap-[10px] mobile:px-[30px]">

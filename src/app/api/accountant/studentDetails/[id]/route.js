@@ -47,13 +47,13 @@ export async function GET(req,{params}){
 export async function POST(req,{params}){
     try {
         const {id}=params
-        const {streetAddress,city,state,fee,selectedClasses}=await req.json()
+        const {streetAddress,city,state,fee,selectedClasses,active}=await req.json()
         await prisma.students.update({
             where:{
                 id:id
             },
             data:{
-                streetAddress,city,state,agreedFee:parseFloat(fee)
+                streetAddress,city,state,agreedFee:parseFloat(fee),active
             }
         })
         if(selectedClasses!==null && selectedClasses.length>0){
@@ -68,10 +68,11 @@ export async function POST(req,{params}){
                       },
                     update:{
                     },
-                    data:{
+                    create:{
                         classId:classId,
                         studentId:id
                     }
+                
                 })
              });
         }

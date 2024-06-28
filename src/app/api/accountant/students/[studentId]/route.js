@@ -10,7 +10,15 @@ export async function GET(req,{params}){
             },
             include:{
                 payments:true,
-                classes:true
+                classes:{
+                    include:{
+                        class:{
+                            include:{
+                                attendance:true
+                            }
+                        }
+                    }
+                }
             }
         })
         if(student){

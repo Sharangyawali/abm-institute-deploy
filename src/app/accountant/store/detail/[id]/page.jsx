@@ -130,7 +130,7 @@ const page = ({params}) => {
             <div className="flex flex-col tablet:flex-row  w-[100%] justify-start gap-[10px] tablet:gap-0">
             <div className="flex flex-col w-[50%] tablet:h-[80px] justify-between">
                 <span className="font-semibold text-[18px]">{costPrice>sellPrice?'Expected Loss':'Expected Profit'}</span>
-               <span className="mt-1 text-black p-2 w-[95%] border rounded-md">${Math.abs(costPrice-sellPrice)} per quantity</span>
+               <span className="mt-1 text-black p-2 w-[95%] border rounded-md">NRP {Math.abs(costPrice-sellPrice)*quantity}</span>
               </div>
             </div>
             <div className="w-[100%] text-[18px] font-semibold text-[#3f3f3f]">

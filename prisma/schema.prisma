@@ -149,6 +149,7 @@ model Students {
   agreedFee     Float?
   classes       ClassStudent[]
   payments      FeePayments[]
+  active Boolean @default(true)
   createdAt     DateTime       @default(now())
 }
 
