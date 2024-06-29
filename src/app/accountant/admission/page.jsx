@@ -50,7 +50,6 @@ const page = () => {
     }
 
   const addStudent=async()=>{
-    console.log("classes are",selectedClasses)
 
     if(gender===''||firstName===''||lastName===''||streetAddress===''||city===''||state===''||zipCode===''||phone===''||!rgexp.test(email)||!fee||isNaN(fee)){
       setError(true)

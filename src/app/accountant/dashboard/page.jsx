@@ -30,7 +30,6 @@ const Page = () => {
     });
     result = await result.json();
     if (result.success === true) {
-      console.log("transactions are", result.transactions);
       setTransactions(result.transactions);
       setDailyTransactions(result.transactions)
       setWeeklyTransactions(result.weekly)
@@ -59,7 +58,6 @@ const Page = () => {
     })
     result=await result.json();
     if(result.success===true){
-      console.log("monthly transactions are",result.transactions)
       setMonthlyTransactions(result.transactions)
       getLatestTransaction()
     }

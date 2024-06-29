@@ -31,7 +31,6 @@ const getEmployeeDetail = async () => {
     } else {
         
         if(result.employee){
-            console.log(result.employee,"is the employee detail")
             const employee=result.employee
             if(employee.teacher!==null){
                 setName(employee.teacher.name)

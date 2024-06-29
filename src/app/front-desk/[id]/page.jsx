@@ -18,7 +18,6 @@ const getUserDetail = async () => {
       toast.error(result.message);
       router.push("/login");
     } else {
-        console.log(result.visitor)
         setLoading(false)
       setUser(result.visitor);
     }

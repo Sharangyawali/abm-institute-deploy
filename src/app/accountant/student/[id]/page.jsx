@@ -51,7 +51,6 @@ const page = ({ params }) => {
             toast.error(result.message)
         }
         else{
-          console.log(result.student)
             setDetail(result.student)
             setStreetAddress(result.student.streetAddress)
             setCity(result.student.city)
@@ -83,7 +82,6 @@ const page = ({ params }) => {
     const handleRemove = (selectedList) => {
       setSelectedClasses(selectedList.map(item => item.id));
     };
-    console.log("selected classes are",selectedClasses)
 
     const handleSubmit=async()=>{
       setLoading(true)

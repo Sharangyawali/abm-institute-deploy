@@ -28,8 +28,6 @@ if(authToken&&role){
         return NextResponse.redirect(new URL("/accountant/dashboard",request.url))
       }
     } catch (error) {
-      console.log(error)
-      console.log("error in token verification")
     }
   }
 }

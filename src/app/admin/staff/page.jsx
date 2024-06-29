@@ -53,7 +53,6 @@ const Page = () => {
 
   const closeModal = () => setIsModalOpen(false);
   const changePassword = (user) => {
-    console.log(user);
     setUser(user);
   };
   const deleteAccount = (user) => setUser(user);

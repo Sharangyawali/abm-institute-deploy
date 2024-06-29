@@ -73,7 +73,6 @@ export async function POST(req,{params}){
             },{status:200})
         
     } catch (error) {
-        console.log(error)
         return NextResponse.json({
             success:false,
             message:'Internal Error'

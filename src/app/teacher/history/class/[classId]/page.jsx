@@ -28,7 +28,6 @@ const page = ({ params }) => {
     if (result.success === false) {
       toast.error(result.message);
     } else {
-      console.log(result.attendance);
       const attend = [];
       result.attendance.forEach((att, index) => {
         let present = 0;
@@ -40,7 +39,6 @@ const page = ({ params }) => {
         att = { ...att, present, absent };
         attend.push(att);
       });
-      console.log(attend);
       setAttendance(attend);
     }
   };

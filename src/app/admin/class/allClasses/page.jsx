@@ -22,12 +22,10 @@ const page = () => {
       router.push("/login");
     } else {
       if (result.classes) {
-        console.log("classes are",result.classes)
         setClasses(result.classes);
       }
     }
   }
-  console.log(classes.length)
   return (
     <div className='w-[100%] flex flex-col'>
       {loading?

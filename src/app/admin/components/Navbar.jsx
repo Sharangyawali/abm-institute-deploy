@@ -86,12 +86,10 @@ const [result,setResult]=useState([])
   },[teachers,frontDesk,accountant,visitors,student])
 
   const getNotifications = async () => {
-    console.log("called ");
     let result = await fetch(`/api/admin/requestedUser`, {
       method: "get",
     });
     result = await result.json();
-    console.log(result);
     if (result.success === false) {
       router.push("/login");
     } else {
@@ -169,7 +167,6 @@ const [result,setResult]=useState([])
         setSearchShow(true)
       }
       setResult(showingAre)
-      console.log(showingAre)
     }
     else{
       setResult([])

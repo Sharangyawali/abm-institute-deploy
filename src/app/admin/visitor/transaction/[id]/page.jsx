@@ -20,7 +20,6 @@ const getStudentDetail = async () => {
       toast.error(result.message);
       router.push("/login");
     } else {
-        console.log(result.visitor)
         setLoading(false)
       setVisitor(result.visitor);
     }

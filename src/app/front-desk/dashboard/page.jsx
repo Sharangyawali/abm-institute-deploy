@@ -67,7 +67,6 @@ const page = () => {
       setMaxUsers(result.visitors);
     }
   };
-  console.log(latestUsers);
   return (
     <div className="w-[100%] flex flex-col tablet:px-5 gap-[15px]">
       <div className="w-[100%] flex justify-start font-bold text-[19px] mt-[15px]">

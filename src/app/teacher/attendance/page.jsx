@@ -21,10 +21,8 @@ const page = () => {
       toast.error(result.message)
     } else {
       setDetail(result.detail);
-      console.log(result.detail);
     }
   };
-  console.log(detail,"are the detail of teachers")
   return (
     <div className="w-[100%] flex flex-col p-[20px]">
       {loading ? (

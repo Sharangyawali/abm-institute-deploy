@@ -16,7 +16,6 @@ export async function GET(){
             status:200
         })
     } catch (error) {
-        console.log(error)
         return NextResponse.json({
             success:false,
             message:'Internal Error'
@@ -28,7 +27,6 @@ export async function GET(){
 
 export async function POST(req){
     try {
-        console.log(req)
         const formdata=await req.formData()
         const name=formdata.get('name')
         const quantity=parseInt( formdata.get('quantity'))
@@ -66,7 +64,6 @@ export async function POST(req){
             },{status:200})
         }
     } catch (error) {
-        console.log(error)
         return NextResponse.json({
             success:false,
             message:'Internal Error'

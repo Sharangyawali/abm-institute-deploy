@@ -36,7 +36,6 @@ const page = ({ params }) => {
   };
 
   const handleClick=async()=>{
-    console.log(attendance)
     setLoading(true)
     let result = await fetch(`/api/teacher/attendance/todays`, {
       method: "post",

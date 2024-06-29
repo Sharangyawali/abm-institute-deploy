@@ -38,7 +38,6 @@ const page = () => {
       toast.error(result.message);
     } else {
       setStore(result.store);
-      console.log(result.store);
       setTotal(result.store.length)
     }
   };

@@ -56,7 +56,6 @@ const[teacher,setTeacher]=useState('')
     if (result.success === false) {
       toast.error(result.message);
     } else {
-      console.log(result.attendance);
       setSelectedTeacher((result.attendance)[0].class.teacher)
       const attend = [];
       result.attendance.forEach((att, index) => {
@@ -69,7 +68,6 @@ const[teacher,setTeacher]=useState('')
         att = { ...att, present, absent };
         attend.push(att);
       });
-      console.log(attend);
       setAttendance(attend);
     }
   };
@@ -78,11 +76,8 @@ const[teacher,setTeacher]=useState('')
     dispatch(setAttendanceDetails(record))
     router.push(`/admin/class/history/class/detail`)
   }
-  console.log("teachers are",teachers)
-  console.log("selected teacher are",selectedTeacher)
   const closeModal = () => setShowModal(false);
 const registerNewTeacher=async()=>{
-  console.log("this is the selected changed teacher",selectedTeacher);
   if(selectedTeacherId && selectedTeacherId!==''){
     dispatch(setLoadingTrue())
     let result = await fetch(`/api/admin/class/${params.classId}`, {

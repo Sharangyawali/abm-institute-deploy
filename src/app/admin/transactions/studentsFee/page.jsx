@@ -39,7 +39,6 @@ const page = () => {
       setError(true)
     }
     else{
-      console.log("student selected is",selectedStudent)
       setLoading(true)
       let result=await fetch('/api/accountant/payment',{
         method:'post',

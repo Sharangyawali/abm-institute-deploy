@@ -29,7 +29,6 @@ try {
         status:200
     })
 } catch (error) {
-    console.log(error)
     return NextResponse.json({
         success:false,
         message:"Internal error"
@@ -61,7 +60,6 @@ export async function GET(req){
             classes:classes
         },{status:200})
     } catch (error) {
-        console.log(error)
         return NextResponse.json({
             success:false,
             message:"Internal error"

@@ -11,6 +11,10 @@ try {
                 }
             },
             payments:true
+        },
+        orderBy:{
+
+            firstName:'asc'
         }
     })
     return NextResponse.json({

@@ -17,7 +17,6 @@ export async function POST(req) {
           ]
         }
        });
-       console.log(user)
       if (user) {
         if(user.isverified===false){
           return NextResponse.json({
@@ -78,7 +77,6 @@ export async function POST(req) {
       );
     }
   } catch (error) {
-    console.log(error)
     return NextResponse.json(
       {
         success: false,

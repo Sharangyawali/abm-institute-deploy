@@ -44,13 +44,10 @@ const page = () => {
   };
 
   const salaryPayment=async()=>{
-    console.log("selected Employee is",selectedEmployee)
     if(!selectedEmployee||payment===0||paymentMethod===''){
       setError(true)
-      console.log("still error")
     }
     else{
-      console.log("running else")
       let employeeId;
       if(selectedEmployee.teacher!==null){
         employeeId=selectedEmployee.teacher.id
@@ -109,7 +106,6 @@ const page = () => {
                     onChange={(values) => {
                       const usersArray=[]
                       obtainedUsers.forEach((user,index) => {
-                        console.log(user)
                         if(user.role===values[0].value){
                           usersArray.push(user)
                         }

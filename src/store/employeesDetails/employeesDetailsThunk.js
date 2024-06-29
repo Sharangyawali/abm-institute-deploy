@@ -37,6 +37,7 @@ export const fetchStudentData = createAsyncThunk('employeeDetails/fetchStudentDa
     throw new Error('Network response was not ok');
   }
   const data=response.students
+  
   return data;
 });
 export const fetchVisitorsData = createAsyncThunk('employeeDetails/fetchVisitorsData', async () => {

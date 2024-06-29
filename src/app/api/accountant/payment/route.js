@@ -44,7 +44,6 @@ export async function POST(req) {
             }, { status: 200 });
         }
     } catch (error) {
-        console.log(error);
         await prisma.$disconnect(); // Ensure the Prisma client is disconnected in case of an error
 
         return NextResponse.json({
@@ -138,7 +137,6 @@ try {
         status:200
       })
 } catch (error) {
-    console.log(error)
     return NextResponse.json({
         success:false,
         message:"Internal error",

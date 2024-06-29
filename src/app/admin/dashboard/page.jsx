@@ -104,7 +104,6 @@ const page = () => {
     });  
     result = await result.json();
     if (result.success === true) {
-      console.log("monthly transactions are", result.transactions);
       setMonthlyTransactions(result.transactions);
     }  
   };  
@@ -164,7 +163,6 @@ const page = () => {
     result = await result.json();
     if (result.success === true) {
       setTransactions(result.transactions);
-      console.log(result.weekly)
       setDailyTransactions(result.transactions)
       setWeeklyTransactions(result.weekly)
       setMonthlyTotalTransactions(result.monthly)

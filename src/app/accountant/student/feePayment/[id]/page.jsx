@@ -21,7 +21,6 @@ const getStudentDetail = async () => {
       toast.error(result.message);
       router.push("/login");
     } else {
-        console.log(result.student)
         setLoading(false)
       setStudent(result.student);
     }

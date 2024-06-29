@@ -93,7 +93,6 @@ getVisiors()
                   // searchBy="className"
                   onChange={(values) =>{
                     setUser('')
-                    console.log(values)
                     // setStudents([]);
                     setRole(values[0].value)
                   }

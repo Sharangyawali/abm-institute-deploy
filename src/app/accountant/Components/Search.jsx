@@ -33,7 +33,6 @@ const Search = () => {
       const studentRecord=result.students.map((stud,index)=>({
         ...stud,role:'Student'
       }))
-      console.log("students are",result.students)
       setEmployee((prev) => [...prev, ...studentRecord]);
       visitors()
     }

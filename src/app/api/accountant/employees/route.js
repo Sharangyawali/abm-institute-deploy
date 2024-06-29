@@ -40,7 +40,6 @@ export async function GET(req){
             users:users
         })
     } catch (error) {
-        console.log(error)
         return NextResponse.json({
             success:false,
             message:"Internal Server Error"

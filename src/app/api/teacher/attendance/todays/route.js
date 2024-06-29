@@ -4,9 +4,6 @@ import { NextResponse } from "next/server"
 export async function POST(req){
 try {
     const {classId,record,attendanceId}=await req.json()
-    console.log(classId)
-    console.log(record)
-    console.log(attendanceId)
     if(!classId||!record){
         return NextResponse.json({
             success:false,
@@ -61,7 +58,6 @@ try {
         },{status:200})
     }
 } catch (error) {
-    console.log(error)
     return NextResponse.json({
         success:false,
         message:"internal Error"

@@ -3,7 +3,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 const page = () => {
   const record = useSelector((state) => state.attendanceDetail.detail);
-  console.log(record);
   return (
     <div className="w-[100%] flex flex-col p-[20px] items-center">
       {record.length === 0 ? (

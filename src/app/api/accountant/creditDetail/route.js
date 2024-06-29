@@ -63,7 +63,6 @@ try {
           );   
     }
 } catch (error) {
-    console.log(error)
     return NextResponse.json({
         success:false,
         message:"Internal error",
