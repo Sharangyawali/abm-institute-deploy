@@ -47,13 +47,41 @@ export async function GET(req,{params}){
 export async function POST(req,{params}){
     try {
         const {id}=params
-        const {streetAddress,city,state,fee,selectedClasses,active}=await req.json()
+        const {streetAddress,city,state,fee,selectedClasses,active,firstName,lastName,email,phone}=await req.json()
+        if(!phone||!email||phone===''||email===''){
+            return NextResponse.json({
+                success:false,
+                message:'Provide email and phone'
+            },{
+                status:301
+            })
+        }
+      const dublicate= await prisma.students.findFirst({
+            where:{
+                OR:[
+                    {phone:phone},
+                    {email:email}
+                ],
+                NOT:[
+                    {id:id}
+                ]
+            }
+        })
+        if(dublicate){
+            return NextResponse.json({
+                success:false,
+                message:'Email or phone already exist'
+            },{
+                status:301
+            })
+        }
+
         await prisma.students.update({
             where:{
                 id:id
             },
             data:{
-                streetAddress,city,state,agreedFee:parseFloat(fee),active
+                streetAddress,city,state,agreedFee:parseFloat(fee),active,firstName,lastName,email,phone
             }
         })
         if(selectedClasses!==null && selectedClasses.length>0){

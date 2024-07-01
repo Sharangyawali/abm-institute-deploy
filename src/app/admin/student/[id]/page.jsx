@@ -8,6 +8,10 @@ import toast from "react-hot-toast";
 const page = ({ params }) => {
     const [loading,setLoading]=useState(true)
     const [streetAddress, setStreetAddress] = useState("");
+    const[firstName,setFirstName] = useState('')
+    const[lastName,setLastName] = useState('')
+    const[phone,setPhone]=useState('')
+    const[email,setEmail]=useState('')
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [fee,setFee]=useState()
@@ -50,7 +54,11 @@ const page = ({ params }) => {
         }
         else{
           setDetail(result.student)
+          setFirstName(result.student.firstName)
+          setLastName(result.student.lastName)
           setStreetAddress(result.student.streetAddress)
+          setEmail(result.student.email)
+          setPhone(result.student.phone)
           setCity(result.student.city)
           setState(result.student.state)
           setFee(parseFloat(result.student.agreedFee))
@@ -81,7 +89,7 @@ const page = ({ params }) => {
       setLoading(true)
       let result=await fetch(`/api/accountant/studentDetails/${params.id}`,{
         method:'post',
-        body:JSON.stringify({streetAddress,city,state,fee,selectedClasses,active:active})
+        body:JSON.stringify({streetAddress,city,state,fee,selectedClasses,active:active,phone,email,firstName,lastName})
     })
     result=await result.json()
     setLoading(false)
@@ -99,11 +107,27 @@ const page = ({ params }) => {
     {loading?<CircularProgress/>:
     
   <div className="w-[100%] tablet:w-[80%] flex flex-col laptop:flex-row justify-between items-center">
-    <div className="w-[100%] laptop:w-[39%] flex flex-col justify-center items-center gap-[20px] h-[200px] laptop:h-[800px] shadow-xl rounded-md bg-gradient-to-r from-[#f06273] to-[#f0936a] text-white font-bold text-[18px]">
+    <div className="w-[100%] laptop:w-[39%] flex flex-col justify-center items-center gap-[10px] h-[300px] laptop:h-[800px] shadow-xl rounded-md bg-gradient-to-r from-[#f06273] to-[#f0936a] text-white font-bold text-[18px]">
       <div className="h-[80px] w-[80px] rounded-full bg-white">
         <img src={`${detail.gender==='Male'?'/profile-demo.jpg':'/female.png'}`} className="h-[100%] w-[100%] rounded-full" />
       </div>
-      <span>{detail.firstName} {detail.lastName}</span>
+      <div className="flex justify-center items-center">
+      <input
+                  type="text"
+                 
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className={`mt-1 w-[100px] p-2 bg-transparent max-w-fit border-none rounded-md focus:border-[#f0936a] focus:border-[1px]`}
+                />
+      <input
+                  type="text"
+                 
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className={`mt-1 w-[100px] bg-transparent p-2 max-w-fit border-none rounded-md focus:border-[#f0936a] focus:border-[1px]`}
+                />
+      {/* <span>{detail.firstName} {detail.lastName}</span> */}
+        </div>
       <span>Student</span>
       <span>Joined On:{(new Date(detail.createdAt)).toLocaleString(undefined,{
   year: 'numeric',   // Full numeric representation of the year (e.g., 2024)
@@ -122,13 +146,25 @@ const page = ({ params }) => {
         <hr></hr>
       </div>
       <div className="flex flex-col tablet:flex-row w-[100%] justify-start gap-[10px] tablet:gap-0">
-        <div className="flex flex-col w-[50%] tablet:h-[60px] justify-between">
+        <div className="flex flex-col w-[50%] tablet:h-[80px] justify-between">
           <span className="font-semibold text-[18px]">Email</span>
-          <span className=" text-[16px]">{detail.email}</span>
+          <input
+                  type="text"
+                 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={`mt-1 text-black p-2 w-[95%] border rounded-md`}
+                />
         </div>
-        <div className="flex flex-col w-[50%] tablet:h-[60px] justify-between">
+        <div className="flex flex-col w-[50%] tablet:h-[80px] justify-between">
           <span className="font-semibold text-[18px]">Phone</span>
-          <span className=" text-[16px]">{detail.phone}</span>
+          <input
+                  type="text"
+                
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className={`mt-1 text-black p-2 w-[95%] border rounded-md`}
+                />
         </div>
       </div>
       <div className="w-[100%] text-[18px] font-semibold text-[#3f3f3f]">

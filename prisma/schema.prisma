@@ -137,8 +137,8 @@ model Classes {
 
 model Students {
   id            String         @id @default(cuid())
-  firstName     String
-  lastName      String
+  firstName     String?
+  lastName      String?
   streetAddress String
   city          String
   state         String
